@@ -20,76 +20,71 @@ const FilmDetails = () => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Box sx={{ border: "2px solid yellow", borderRadius: 2, p: 2 }}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <CardMedia
-              component="img"
-              height="400"
-              image={film.imageUrl || "https://totobi.com.ua/design/themes/cscart-boilerplate-master/media/images/icons/no_image.png"}
-              alt={film.title}
-              sx={{ borderRadius: 2 }}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Card sx={{ height: "100%" }}>
-              <CardContent>
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#white' }}>
-                  {film.title}
-                </Typography>
-                <Typography variant="body1" paragraph><strong>Description: </strong>{film.description}</Typography>
-                <Typography variant="body1" sx={{ fontStyle: 'italic' }}><strong>Genre: </strong>{film.genre}</Typography>
-                <Typography variant="body1"><strong>Duration: </strong>{film.duration}</Typography>
-                <Typography variant="body1" sx={{ color: '#white', display: 'flex', alignItems: 'center' }}>
-                  <strong>Rating:</strong>
-                  <Rating 
-                    name="film-rating"
-                    value={film.rating}
-                    max={10}  
-                    precision={0.5}  
-                    readOnly
-                    sx={{ marginLeft: 1 }}  
-                  />
-                </Typography>
-                {film.releaseDate && (
-                  <Typography>
-                    <strong>Release date: </strong>{film.releaseDate.toLocaleDateString()}
-                  </Typography>
-                )}
-              </CardContent>
-            </Card>
-          </Grid>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={4}>
+          <CardMedia
+            component="img"
+            height="400"
+            image={film.imageUrl || "https://totobi.com.ua/design/themes/cscart-boilerplate-master/media/images/icons/no_image.png"}
+            alt={film.title}
+            sx={{borderRadius: 2}} 
+          />
         </Grid>
+        <Grid item xs={12} md={8}>
+          <Card sx={{height: "100%"}}>
+            <CardContent>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#white' }}>{film.title}</Typography>
+            <Typography variant="body1" paragraph><strong>Description: </strong>{film.description}</Typography>
+            <Typography variant="body1" sx={{ fontStyle: 'italic' }}><strong>Genre: </strong>{film.genre}</Typography>
+            <Typography variant="body1"><strong>Duration: </strong>{film.duration}</Typography>
+            <Typography variant="body1" sx={{ color: '#white', display: 'flex', alignItems: 'center' }}><strong>Rating:</strong>
+            <Rating 
+              name="film-rating"
+              value={film.rating}
+              max={10}  
+              precision={0.5}  
+              readOnly
+              sx={{ marginLeft: 1 }}  
+            />
+            </Typography>
+            
+            {film.releaseDate && (
+              <Typography>
+                <strong>Release date: </strong>{film.releaseDate.toLocaleDateString()}
+              </Typography>
+            )}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       </Box>
-
       <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>Available Sessions</Typography>
-
-      <Box sx={{ border: "2px solid yellow", borderRadius: 2, p: 2, overflow: "auto" }}>
-        <List>
-          {filmSessions.length > 0 ? (
-            filmSessions.map((session: Session) => (
-              <div key={session.id}>
-                <ListItem sx={{ display: "flex", flexDirection: "column", width: "100%", alignItems: "flex-start" }}>
-                  <ListItemText
-                    primary={`${session.dateTime.toLocaleDateString()} - ${session.startTime} to ${session.endTime}`}
-                    secondary={`Hall: ${session.hall.name} | Price: $${session.hall.ticket.price}`}
-                    sx={{ marginBottom: 1 }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleBookSession(session.id)}
-                    sx={{ width: { xs: "100%", sm: "auto" }, marginTop: 1 }}
-                  >
-                    To reserve
-                  </Button>
-                </ListItem>
-                <Divider />
-              </div>
-            ))
-          ) : (
-            <Typography>No sessions available for this film.</Typography>
-          )}
-        </List>
+      <Box sx={{ border: "2px solid yellow", borderRadius: 2, p: 2 }}>
+      <List>
+        {filmSessions.length > 0 ? (
+          filmSessions.map((session: Session) => (
+            <div key={session.id}>
+              <ListItem>
+                <ListItemText
+                  primary={`${session.dateTime.toLocaleDateString()} - ${session.startTime} to ${session.endTime}`}
+                  secondary={`Hall: ${session.hall.name} | Price: $${session.hall.ticket.price}`}
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleBookSession(session.id)}
+                  sx={{ marginLeft: 2 }}
+                >
+                  To reserve
+                </Button>
+              </ListItem>
+              <Divider />
+            </div>
+          ))
+        ) : (
+          <Typography>No sessions available for this film.</Typography>
+        )}
+      </List>
       </Box>
     </Container>
   );
