@@ -52,7 +52,7 @@ export const sessions: Session[] = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
   startTime: "18:00",
   endTime: "20:30",
-  dateTime: new Date(`2025-02-${i + 1}T18:00:00`),
+  dateTime: new Date(`2025-02-${(i + 1).toString().padStart(2, '0')}T18:00:00`),
   hall: halls[i % halls.length]!,
   film: films[i % films.length]!,
 }));
