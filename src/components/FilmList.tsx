@@ -1,13 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Film } from "@/models/Film";
 import { Card, CardContent, CardMedia, Typography, Button, Grid } from "@mui/material";
+import { routes } from "@/routes";
 
 interface ListFilmProps {
   films: Film[];
-  onSelectFilm: (film: Film) => void;
 }
 
-const ListFilm: React.FC<ListFilmProps> = ({ films, onSelectFilm }) => {
+const ListFilm: React.FC<ListFilmProps> = ({ films }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: string) => {
+    navigate(`${routes.PUBLIC.FILMS}/${id}`);
+  };
+
   return (
     <Grid container spacing={3} sx={{ padding: 2 }}>
       {films.map((film) => (
@@ -33,7 +40,7 @@ const ListFilm: React.FC<ListFilmProps> = ({ films, onSelectFilm }) => {
                 color="primary"
                 fullWidth
                 sx={{ marginTop: 2 }}
-                onClick={() => onSelectFilm(film)}
+                onClick={() => handleNavigate(film.id.toString())}
               >
                 View Details
               </Button>
