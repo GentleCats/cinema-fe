@@ -19,27 +19,55 @@ const ListFilm: React.FC<ListFilmProps> = ({ films }) => {
     <Grid container spacing={3} sx={{ padding: 2 }}>
       {films.map((film) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={film.id}>
-          <Card sx={{ maxWidth: 345, boxShadow: 3 }}>
+          <Card sx={{ maxWidth: 345, display: "flex", flexDirection: "column", height: "100%" }}>
             {film.imageUrl && (
-              <CardMedia component="img" height="200" image={film.imageUrl} alt={film.title} />
+              <CardMedia
+                component="img"
+                height="200"
+                image={film.imageUrl}
+                alt={film.title}
+                sx={{ objectFit: "cover" }}
+              />
             )}
-            <CardContent>
-              <Typography variant="h6" component="div">
+            <CardContent sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+              >
                 {film.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {film.genre} | Rating: {film.rating}
+              
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+              >
+                {film.genre && <>{film.genre}</>}
               </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+              >
+                Rating: {film.rating}
+              </Typography>
+
               {film.director && (
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                >
                   Director: {film.director}
                 </Typography>
               )}
+
               <Button
                 variant="contained"
                 color="primary"
                 fullWidth
-                sx={{ marginTop: 2 }}
+                sx={{ marginTop: "auto" }}
                 onClick={() => handleNavigate(film.id.toString())}
               >
                 View Details
