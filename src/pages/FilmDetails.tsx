@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Container, Typography, Card, CardContent, CardMedia, Grid, Box, Rating } from "@mui/material";
 import { Film } from "../models/Film";
 import Loader from "../components/Loader";
 import SessionList from "../components/SessionList";
+import axiosInstance from "@/utils/axios";
 
 
 
@@ -16,7 +16,7 @@ const FilmDetails = () => {
   useEffect(() => {
     const fetchFilmDetails = async () => {
       try {
-        const response = await axios.get(`https://localhost:7046/api/Movie/get-by-id/${id}`, {
+        const response = await axiosInstance.get(`/Admin/get-by-tmdb-id?movieId=${id}`, {
           headers: {
             'accept': '*/*'
           }
