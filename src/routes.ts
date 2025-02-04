@@ -14,8 +14,13 @@ export const routes = {
     LOGIN: '/login',
     REGISTER: '/register',
   },
-  PRIVATE: {},
-  API: {},
+  PRIVATE: {
+    HOME: '/admin'
+  },
+  API: {
+    ACCOUNT: '/Account',
+    MOVIE: '/Movie',
+  },
 };
 
 interface SidebarLink {

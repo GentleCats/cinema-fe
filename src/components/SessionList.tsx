@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Box, List, Typography, Grid, Button } from "@mui/material"; 
 import { Session } from "../models/Session";  
 import Loader from "./Loader";
 import SessionComponent from "./Session";  
+import axiosInstance from "@/utils/axios";
 
 interface SessionListProps {
   filmId: string;
@@ -16,7 +16,7 @@ const SessionList = ({ filmId }: SessionListProps) => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const response = await axios.get(`https://localhost:7046/api/Sessions/get-by-film-id/${filmId}`);
+        const response = await axiosInstance.get(`/Sessions/get-by-film-id/${filmId}`);
         setSessions(response.data);
       } catch (error) {
         console.error("Error fetching sessions:", error);
