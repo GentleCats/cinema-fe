@@ -1,30 +1,29 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Container, Typography, Card, CardContent, CardMedia, Grid, Box, Rating } from "@mui/material";
+import { Container, Typography, Card, CardContent, CardMedia, Grid, Box, Rating, IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Film } from "../models/Film";
 import Loader from "../components/Loader";
 import SessionList from "../components/SessionList";
 import axiosInstance from "@/utils/axios";
 
-
-
 const FilmDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [film, setFilm] = useState<Film | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFilmDetails = async () => {
       try {
-        const response = await axiosInstance.get(`/Admin/get-by-tmdb-id?movieId=${id}`, {
+        const response = await axiosInstance.get(`/Movie/get-by-tmdb-id?movieId=${id}`, {
           headers: {
             'accept': '*/*'
           }
         });
-  
+
         if (response.data) {
           setFilm(response.data);
-
         } else {
           console.error("Invalid data structure received from API");
         }
@@ -34,27 +33,30 @@ const FilmDetails = () => {
         setLoading(false);
       }
     };
-  
+
     fetchFilmDetails();
   }, [id]);
 
   if (loading) {
     return <Loader />;
-  }  
+  }
 
   if (!film) {
     return <Typography variant="h5">Film not found!</Typography>;
   }
 
-
-
   const formatDate = (date: Date | string) => {
     const formattedDate = new Date(date);
     return !isNaN(formattedDate.getTime()) ? formattedDate.toLocaleDateString() : "Invalid Date";
   };
-  
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
+      {/* Кнопка "Назад" */}
+      <IconButton onClick={() => navigate(-1)} sx={{ mb: 2, color: "yellow" }}>
+        <ArrowBackIcon fontSize="large" />
+      </IconButton>
+
       <Box sx={{ border: "2px solid yellow", borderRadius: 2, p: 2 }}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
@@ -65,29 +67,30 @@ const FilmDetails = () => {
               sx={{
                 borderRadius: 2,
                 width: '100%',
-                height: 'auto', 
-                objectFit: 'cover', 
+                height: 'auto',
+                objectFit: 'cover',
               }}
             />
           </Grid>
           <Grid item xs={12} md={8}>
-            <Card sx={{height: "100%"}}>
+            <Card sx={{ height: "100%" }}>
               <CardContent>
                 <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#fff' }}>{film.title}</Typography>
                 <Typography variant="body1" paragraph><strong>Description: </strong>{film.description}</Typography>
                 <Typography variant="body1" sx={{ fontStyle: 'italic' }}><strong>Genre: </strong>{film.genre}</Typography>
                 <Typography variant="body1"><strong>Duration: </strong>{film.duration}</Typography>
-                <Typography variant="body1" sx={{ color: '#fff', display: 'flex', alignItems: 'center' }}><strong>Rating:</strong>
-                  <Rating 
+                <Typography variant="body1" sx={{ color: '#fff', display: 'flex', alignItems: 'center' }}>
+                  <strong>Rating:</strong>
+                  <Rating
                     name="film-rating"
                     value={film.rating}
-                    max={10}  
-                    precision={0.5}  
+                    max={10}
+                    precision={0.5}
                     readOnly
-                    sx={{ marginLeft: 1 }}  
+                    sx={{ marginLeft: 1 }}
                   />
                 </Typography>
-                
+
                 {film.releaseDate && (
                   <Typography>
                     <strong>Release date: </strong>{formatDate(film.releaseDate.toString())}
@@ -112,10 +115,10 @@ const FilmDetails = () => {
                     <Box
                       sx={{
                         display: 'inline-block',
-                        backgroundColor: 'yellow', 
-                        padding: '4px 12px', 
+                        backgroundColor: 'yellow',
+                        padding: '4px 12px',
                         borderRadius: '6px 6px 0 0',
-                        marginBottom: 0, 
+                        marginBottom: 0,
                       }}
                     >
                       <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black' }}>
