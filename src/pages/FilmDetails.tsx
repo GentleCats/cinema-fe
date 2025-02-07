@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { geMovie } from '@/api/movieAPI';
-import { Container, Typography } from '@mui/material';
-
-import FilmInfo from '@/components/FilmInfo';
-
-import Loader from '../components/Loader';
-import SessionList from '../components/SessionList';
-import { Film } from '../models/Film';
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Container, Typography, IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Film } from "../models/Film";
+import Loader from "../components/Loader";
+import FilmInfo from "@/components/FilmInfo";
+import { geMovie } from "@/api/movieAPI";
 
 const FilmDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [film, setFilm] = useState<Film | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
@@ -46,6 +44,10 @@ const FilmDetails = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
+       {/* Кнопка "Назад" */}
+       <IconButton onClick={() => navigate(-1)} sx={{ mb: 2, color: "yellow" }}>
+        <ArrowBackIcon fontSize="large" />
+      </IconButton>
       <FilmInfo film={film} />
 
       {/* <SessionList filmId={film.id.toString()} /> */}

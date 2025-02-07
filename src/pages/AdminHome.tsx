@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from 'react';
-
-import { Film } from '@/models/Film';
-import { Container, Typography } from '@mui/material';
-
-import ListFilm from '@/components/FilmList';
-
-import axiosInstance from '@/utils/axios';
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import ListFilm from "@/components/FilmList";
+import { Film } from "@/models/Film";
+import { Container, Typography } from "@mui/material";
+import axiosInstance from "@/utils/axios";
+import PaginationComponent from "@/components/Pagination";
 
 const AdminHome: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   useEffect(() => {
-    axiosInstance
-      .get('/Movie/get-popular?page=1')
-      .then((res) => setFilms(res.data))
-      .catch((err) => console.error('Failed to fetch films', err));
-  }, []);
+    axiosInstance.get(`/Movie/get-popular?page=${currentPage}`)
+      .then((res) => {
+        setFilms(res.data);  
+        setTotalPages(100); 
+      })
+      .catch((err) => console.error("Failed to fetch films", err));
+  }, [currentPage]);
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
+    setSearchParams({ page: page.toString() });
+  };
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
@@ -23,6 +32,11 @@ const AdminHome: React.FC = () => {
         Now Showing
       </Typography>
       <ListFilm films={films} />
+      <PaginationComponent
+        count={totalPages}
+        page={currentPage}
+        onPageChange={handlePageChange}
+      />
     </Container>
   );
 };
