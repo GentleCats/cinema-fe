@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { createMovie } from '@/api/movieAPI';
+import { createMovie, geMovie, updateMovie } from '@/api/movieAPI';
 import { Film } from '@/models/Film';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
@@ -20,7 +20,7 @@ interface IFilmCreateForm {
 
 const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
   const navigate = useNavigate();
-
+  const [isInProduction, setIsInProduction] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   type FilmValidationType = z.infer<typeof filmValidation>;
   const formMethods = useForm<FilmValidationType>({
@@ -47,6 +47,17 @@ const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
     formState: { isValid, errors },
   } = formMethods;
 
+  useEffect(() => {
+    const isMovieInProd = async (id: number) => {
+      console.log(id);
+      const movie = await geMovie(id);
+      console.log(movie);
+
+      setIsInProduction(Boolean(movie));
+    };
+    isMovieInProd(film.id);
+  }, [film.id]);
+
   const renderTextField = (name: keyof FilmValidationType, label: string, multiline = false) => (
     <Controller
       name={name}
@@ -68,7 +79,11 @@ const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
   const onSubmit = async (data: FilmValidationType) => {
     try {
       setIsLoading(true);
-      await createMovie(data);
+      if (isInProduction) {
+        await updateMovie(film.id, data);
+        return;
+      }
+      await createMovie(data, film.id);
     } catch (err) {
       setIsLoading(false);
     }
@@ -180,7 +195,7 @@ const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
             fullWidth
             sx={{ mt: 2 }}
           >
-            Create
+            {isInProduction ? 'Update' : 'Create'}
           </Button>
         </Grid>
       </Grid>

@@ -16,6 +16,7 @@ export const routes = {
   },
   PRIVATE: {
     HOME: '/admin',
+    FILMS: '/admin/film',
   },
   API: {
     ACCOUNT: '/Account',

@@ -7,8 +7,12 @@ import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material'
 const FilmCard = ({ film }: { film: Film }) => {
   const navigate = useNavigate();
 
-  const handleNavigate = (id: string) => {
-    navigate(`${routes.PUBLIC.FILMS}/${id}`);
+  const handleNavigate = (film: Film) => {
+    if (film.tmdbId) {
+      navigate(`${routes.PUBLIC.FILMS}/${film.tmdbId}`);
+      return;
+    }
+    navigate(`${routes.PRIVATE.FILMS}/${film.id}`);
   };
 
   return (
@@ -55,7 +59,7 @@ const FilmCard = ({ film }: { film: Film }) => {
           color="primary"
           fullWidth
           sx={{ marginTop: 'auto' }}
-          onClick={() => handleNavigate(film.id.toString())}
+          onClick={() => handleNavigate(film)}
         >
           View Details
         </Button>

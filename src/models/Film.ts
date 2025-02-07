@@ -1,5 +1,6 @@
 export interface Film {
   id: number;
+  tmdbId?: number;
   title: string;
   description: string;
   duration: string;
