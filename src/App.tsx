@@ -6,6 +6,7 @@ import AdminHome from './pages/AdminHome';
 import FilmDetails from './pages/FilmDetails';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import TicketBooking from '@/pages/TicketBooking.tsx';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import AuthLayout from './pages/layouts/AuthLayout';
@@ -28,6 +29,7 @@ function App() {
           <Route path={routes.PUBLIC.HOME} element={<Home />} />
           <Route path={routes.PUBLIC.PROFILE} element={<Profile />} />
           <Route path={`${routes.PUBLIC.FILMS}/:id`} element={<FilmDetails />} />
+          <Route path={routes.PUBLIC.TICKET_BOOKING} element={<TicketBooking />} />
         </Route>
         <Route
           element={

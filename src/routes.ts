@@ -2,6 +2,7 @@
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import HomeIcon from '@mui/icons-material/Home';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SvgIconProps } from '@mui/material';
 
@@ -13,6 +14,7 @@ export const routes = {
     PROFILE: '/profile',
     LOGIN: '/login',
     REGISTER: '/register',
+    TICKET_BOOKING: '/ticket-booking',
   },
   PRIVATE: {
     HOME: '/admin',
@@ -45,4 +47,9 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'profile',
     route: routes.PUBLIC.PROFILE,
   },
+  {
+    icon: LocalActivityIcon,
+    label: 'Ticket Booking',
+    route: routes.PUBLIC.TICKET_BOOKING,
+  }
 ];
