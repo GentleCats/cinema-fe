@@ -1,13 +1,16 @@
-import { registerValidation } from "@/utils/zod-validation";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { registerUser } from '@/api/authAPI';
+import { routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Loader from "@/components/Loader";
-import { routes } from "@/routes";
-import { Paper, Typography, Box, TextField, Button } from "@mui/material";
-import { registerUser } from "@/api/authAPI";
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { z } from 'zod';
+
+import Loader from '@/components/Loader';
+
+import { registerValidation } from '@/utils/zod-validation';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -21,9 +24,9 @@ const SignUp = () => {
       username: '',
       email: '',
       password: '',
-      confirm: ''
-    }
-  })
+      confirm: '',
+    },
+  });
   const {
     control,
     handleSubmit,
@@ -34,37 +37,43 @@ const SignUp = () => {
     try {
       setIsLoading(true);
       const user = await registerUser(data);
-      if(user.success){
+      if (user.success) {
         navigate(routes.PUBLIC.LOGIN);
       }
-      
     } catch (err) {
       setIsLoading(false);
     }
-  }
+  };
 
   if (isLoading) {
     return <Loader />;
   }
 
   return (
-    <Paper component="form" onSubmit={handleSubmit(onSubmit)} elevation={3} sx={{
-      padding: 4,
-      maxWidth: 400,
-      width: '100%',
-      bgcolor: 'background.paper',
-      color: 'text.primary',
-    }}>
+    <Paper
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      elevation={3}
+      sx={{
+        padding: 4,
+        maxWidth: 400,
+        width: '100%',
+        bgcolor: 'background.paper',
+        color: 'text.primary',
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Sign Up
       </Typography>
-      <Box sx={{
-        color: 'text.primary',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        mt: 2,
-      }}>
+      <Box
+        sx={{
+          color: 'text.primary',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          mt: 2,
+        }}
+      >
         <Controller
           name="username"
           control={control}
@@ -124,10 +133,16 @@ const SignUp = () => {
           )}
         />
       </Box>
-      <Button type="submit" variant="contained" color="primary" disabled={!isValid} sx={{
-        mt: 3,
-        width: '100%',
-      }}>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={!isValid}
+        sx={{
+          mt: 3,
+          width: '100%',
+        }}
+      >
         Sign Up
       </Button>
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center', gap: 2 }}>
@@ -145,7 +160,6 @@ const SignUp = () => {
       </Box>
     </Paper>
   );
-
-}
+};
 
 export default SignUp;

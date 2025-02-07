@@ -15,7 +15,7 @@ export const routes = {
     REGISTER: '/register',
   },
   PRIVATE: {
-    HOME: '/admin'
+    HOME: '/admin',
   },
   API: {
     ACCOUNT: '/Account',
@@ -38,7 +38,7 @@ export const sidebarLinks: SidebarLink[] = [
   {
     icon: SettingsIcon,
     label: 'settings',
-    route: routes.PUBLIC.SETTINGS,
+    route: routes.PRIVATE.HOME,
   },
   {
     icon: PermIdentityIcon,
