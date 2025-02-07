@@ -1,15 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import { BrowserRouter } from 'react-router-dom'
-import { ThemeProvider } from '@emotion/react'
-import darkTheme from './utils/theme.ts'
-import { CssBaseline } from '@mui/material'
-import { Provider } from 'react-redux'
-import store, { persistor } from './redux/store.ts'
-import { PersistGate } from 'redux-persist/integration/react'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
+import { PersistGate } from 'redux-persist/integration/react';
+
+import App from './App.tsx';
+import { AuthProvider } from './hooks/AuthContext.tsx';
 import './index.css';
-import { AuthProvider } from './hooks/AuthContext.tsx'
+import store, { persistor } from './redux/store.ts';
+import darkTheme from './utils/theme.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -26,4 +28,4 @@ createRoot(document.getElementById('root')!).render(
       </BrowserRouter>
     </AuthProvider>
   </StrictMode>,
-)
+);

@@ -1,4 +1,5 @@
-import { createContext, useState, ReactNode, useContext, useLayoutEffect } from 'react';
+import { ReactNode, createContext, useContext, useLayoutEffect, useState } from 'react';
+
 import { decodeRole } from '@/utils/decodeToken';
 
 type UserMetaData = {
@@ -16,14 +17,11 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserMetaData | null>(null);
-  console.log(user, 'provider');
-
 
   useLayoutEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const roles = decodeRole(token);
-      console.log('i am setting token', token, roles)
       setUser({ token, roles: roles });
     }
   }, []);
@@ -33,11 +31,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, setUser, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
@@ -46,4 +40,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-} 
+};
