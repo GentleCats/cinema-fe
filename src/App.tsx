@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 
 import AdminHome from './pages/AdminHome';
 import FilmDetails from './pages/FilmDetails';
+import FilmManaging from './pages/FilmManaging';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import SignIn from './pages/SignIn';
@@ -39,6 +40,7 @@ function App() {
           }
         >
           <Route path={routes.PRIVATE.HOME} element={<AdminHome />} />
+          <Route path={`${routes.PRIVATE.FILMS}/:id`} element={<FilmManaging />} />
         </Route>
         <Route element={<AuthLayout />}>
           <Route path={routes.PUBLIC.REGISTER} element={<SignUp />} />
