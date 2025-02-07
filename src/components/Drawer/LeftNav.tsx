@@ -11,7 +11,11 @@ export const leftNav = (
   <Box sx={s.wrapper}>
     <Box sx={s.logoWrapper}>
       <Box sx={s.logoInner}>
-        <img src="https://images.bauerhosting.com/legacy/media/6214/2fda/2bc7/18a7/e20d/f5fd/Whatisinterstellar.jpg?auto=format&w=1440&q=80" alt="logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        <img
+          src="https://images.bauerhosting.com/legacy/media/6214/2fda/2bc7/18a7/e20d/f5fd/Whatisinterstellar.jpg?auto=format&w=1440&q=80"
+          alt="logo"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
       </Box>
     </Box>
 

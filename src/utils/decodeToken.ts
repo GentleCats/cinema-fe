@@ -8,4 +8,4 @@ export const decodeRole = (token: string) => {
     roles = decoded[rolesKey] as string[];
   }
   return roles;
-} 
+};

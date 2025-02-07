@@ -1,5 +1,6 @@
-import { ListItem, ListItemText, Button, Divider } from "@mui/material";
-import type { Session } from "../models/Session";
+import { Button, Divider, ListItem, ListItemText } from '@mui/material';
+
+import type { Session } from '../models/Session';
 
 interface SessionProps {
   session: Session;
@@ -22,12 +23,12 @@ const Session = ({ session }: SessionProps) => {
           onClick={() => handleBookSession(session.id)}
           sx={{
             marginLeft: 2,
-            border: "2px solid yellow",
-            color: "white",
-            backgroundColor: "transparent",
-            "&:hover": {
-              backgroundColor: "yellow",
-              color: "black",
+            border: '2px solid yellow',
+            color: 'white',
+            backgroundColor: 'transparent',
+            '&:hover': {
+              backgroundColor: 'yellow',
+              color: 'black',
             },
           }}
         >

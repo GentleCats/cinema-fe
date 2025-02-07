@@ -1,7 +1,7 @@
 import { Box, Drawer } from '@mui/material';
-import { leftNav } from './LeftNav';
-import { bottomNav } from './BottomNav';
 
+import { bottomNav } from './BottomNav';
+import { leftNav } from './LeftNav';
 import { styles } from './styles.mui';
 
 const SideBar = () => {

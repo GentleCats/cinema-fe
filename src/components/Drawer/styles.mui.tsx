@@ -1,4 +1,4 @@
-import { sidebarWidth } from "@/constants";
+import { sidebarWidth } from '@/constants';
 
 export const styles = {
   wrapper: { width: { md: sidebarWidth }, flexShrink: { md: 0 }, display: { sm: 'none', md: 'block' } },

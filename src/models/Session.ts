@@ -1,5 +1,5 @@
-import { Film } from "./Film";
-import { Hall } from "./Hall";
+import { Film } from './Film';
+import { Hall } from './Hall';
 
 export interface Session {
   id: number;

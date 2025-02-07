@@ -1,15 +1,19 @@
-import { loginUser } from "@/api/authAPI";
-import Loader from "@/components/Loader";
-import { useAuth } from "@/hooks/AuthContext";
-import { routes } from "@/routes";
-import { decodeRole } from "@/utils/decodeToken";
-import { loginValidation } from "@/utils/zod-validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Paper, Typography, Box, TextField, Button } from "@mui/material";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { loginUser } from '@/api/authAPI';
+import { routes } from '@/routes';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { z } from 'zod';
+
+import Loader from '@/components/Loader';
+
+import { decodeRole } from '@/utils/decodeToken';
+import { loginValidation } from '@/utils/zod-validation';
+
+import { useAuth } from '@/hooks/AuthContext';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -34,45 +38,52 @@ const SignIn = () => {
   const onSubmit = async (data: LoginValidationType) => {
     setIsLoading(true);
     const { token } = await loginUser({ ...data });
-    if(!token) return;
+    if (!token) return;
     try {
       const roles = decodeRole(token);
       const user = { token, roles };
       setUser(user);
 
       if (roles?.includes('Admin')) {
-        navigate(routes.PRIVATE.HOME); 
+        navigate(routes.PRIVATE.HOME);
       } else {
-        navigate(routes.PUBLIC.HOME); 
+        navigate(routes.PUBLIC.HOME);
       }
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
     }
-  }
+  };
 
   if (isLoading) {
     return <Loader />;
   }
   return (
-    <Paper component="form" onSubmit={handleSubmit(onSubmit)} elevation={3} sx={{
-      padding: 4,
-      maxWidth: 400,
-      width: '100%',
-      bgcolor: 'background.paper',
-      color: 'text.primary',
-    }}>
+    <Paper
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      elevation={3}
+      sx={{
+        padding: 4,
+        maxWidth: 400,
+        width: '100%',
+        bgcolor: 'background.paper',
+        color: 'text.primary',
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Sign In
       </Typography>
 
-      <Box sx={{
-        color: 'text.primary',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        mt: 2,
-      }}>
+      <Box
+        sx={{
+          color: 'text.primary',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+          mt: 2,
+        }}
+      >
         <Controller
           name="username"
           control={control}
@@ -103,10 +114,16 @@ const SignIn = () => {
           )}
         />
       </Box>
-      <Button type="submit" variant="contained" color="primary" disabled={!isValid} sx={{
-        mt: 3,
-        width: '100%',
-      }}>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={!isValid}
+        sx={{
+          mt: 3,
+          width: '100%',
+        }}
+      >
         Sign In
       </Button>
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center', gap: 2 }}>
@@ -124,6 +141,6 @@ const SignIn = () => {
       </Box>
     </Paper>
   );
-}
+};
 
 export default SignIn;
