@@ -4,16 +4,19 @@ import { Box } from '@mui/material';
 
 import AdminHome from './pages/AdminHome';
 import FilmDetails from './pages/FilmDetails';
+import FilmManaging from './pages/FilmManaging';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import TicketBooking from '@/pages/TicketBooking.tsx';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Halls from './pages/Halls';
 import AuthLayout from './pages/layouts/AuthLayout';
 import BaseLayout from './pages/layouts/BaseLayout';
 import ProtectedRoute from './pages/layouts/ProtectedRoute';
 import RoleProtectedRoute from './pages/layouts/RoleProtectedRoute';
 import { routes } from './routes';
+import HallCreateForm from './pages/HallCreateForm';
 
 function App() {
   return (
@@ -41,6 +44,9 @@ function App() {
           }
         >
           <Route path={routes.PRIVATE.HOME} element={<AdminHome />} />
+          <Route path={`${routes.PRIVATE.FILMS}/:id`} element={<FilmManaging />} />
+          <Route path={routes.PRIVATE.HALLS} element={<Halls />} />
+          <Route path={routes.PRIVATE.HALLS_CREATE} element={<HallCreateForm />} />
         </Route>
         <Route element={<AuthLayout />}>
           <Route path={routes.PUBLIC.REGISTER} element={<SignUp />} />
