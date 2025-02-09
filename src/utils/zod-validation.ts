@@ -41,3 +41,12 @@ export const filmValidation = z.object({
   trailerUrl: z.string(),
   imageUrl: z.string(),
 });
+
+export const hallValidation = z.object({
+  name: z
+  .string()
+  .min(3, { message: 'name must be more than 2 characters' }),
+  cols: z.number().positive(),
+  rows: z.number().positive(),
+  capacity: z.number().positive()
+})

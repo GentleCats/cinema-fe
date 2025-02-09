@@ -19,11 +19,12 @@ export const routes = {
     HOME: '/admin',
     FILMS: '/admin/film',
     HALLS: '/admin/halls',
+    HALLS_CREATE: '/admin/halls/create',
   },
   API: {
     ACCOUNT: '/Account',
     MOVIE: '/Movie',
-    HALLS: '/Hall/get-all',
+    HALLS: '/Hall',
   },
 };
 
