@@ -1,22 +1,24 @@
-import { createHall } from "@/api/hallAPI";
-import { routes } from "@/routes";
-import { hallValidation } from "@/utils/zod-validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Paper, Typography, Box, TextField, Button } from "@mui/material";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { useEffect } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+import { createHall } from '@/api/hallAPI';
+import { routes } from '@/routes';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { z } from 'zod';
+
+import { hallValidation } from '@/utils/zod-validation';
 
 const HallCreateForm = () => {
   const navigate = useNavigate();
-  
+
   type HallValidationType = z.infer<typeof hallValidation>;
   const formMethods = useForm<HallValidationType>({
     resolver: zodResolver(hallValidation),
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
-      name: "",
+      name: '',
       rows: 0,
       cols: 0,
       capacity: 0,
@@ -31,13 +33,13 @@ const HallCreateForm = () => {
     formState: { isValid, errors },
   } = formMethods;
 
-  const rows = watch("rows");
-  const cols = watch("cols");
+  const rows = watch('rows');
+  const cols = watch('cols');
 
   useEffect(() => {
     const parsedRows = parseInt(rows as unknown as string) || 0;
     const parsedCols = parseInt(cols as unknown as string) || 0;
-    setValue("capacity", parsedRows * parsedCols);
+    setValue('capacity', parsedRows * parsedCols);
   }, [rows, cols, setValue]);
 
   const onSubmit = async (data: HallValidationType) => {
@@ -45,8 +47,7 @@ const HallCreateForm = () => {
       await createHall(data);
       navigate(routes.PRIVATE.HALLS);
     } catch (error) {
-      console.log("hall create error");
-      
+      console.log('hall create error');
     }
   };
 
@@ -59,9 +60,9 @@ const HallCreateForm = () => {
         padding: 4,
         ml: 6,
         maxWidth: 400,
-        width: "100%",
-        bgcolor: "background.paper",
-        color: "text.primary",
+        width: '100%',
+        bgcolor: 'background.paper',
+        color: 'text.primary',
       }}
     >
       <Typography variant="h4" gutterBottom>
@@ -70,9 +71,9 @@ const HallCreateForm = () => {
 
       <Box
         sx={{
-          color: "text.primary",
-          display: "flex",
-          flexDirection: "column",
+          color: 'text.primary',
+          display: 'flex',
+          flexDirection: 'column',
           gap: 2,
           mt: 2,
         }}
@@ -127,14 +128,7 @@ const HallCreateForm = () => {
           name="capacity"
           control={control}
           render={({ field }) => (
-            <TextField
-              {...field}
-              label="Capacity"
-              type="number"
-              variant="outlined"
-              disabled
-              fullWidth
-            />
+            <TextField {...field} label="Capacity" type="number" variant="outlined" disabled fullWidth />
           )}
         />
       </Box>
@@ -145,7 +139,7 @@ const HallCreateForm = () => {
         disabled={!isValid}
         sx={{
           mt: 3,
-          width: "100%",
+          width: '100%',
         }}
       >
         Create

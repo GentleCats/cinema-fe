@@ -2,21 +2,22 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
+import TicketBooking from '@/pages/TicketBooking.tsx';
+
 import AdminHome from './pages/AdminHome';
 import FilmDetails from './pages/FilmDetails';
 import FilmManaging from './pages/FilmManaging';
+import HallCreateForm from './pages/HallCreateForm';
+import Halls from './pages/Halls';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import TicketBooking from '@/pages/TicketBooking.tsx';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Halls from './pages/Halls';
 import AuthLayout from './pages/layouts/AuthLayout';
 import BaseLayout from './pages/layouts/BaseLayout';
 import ProtectedRoute from './pages/layouts/ProtectedRoute';
 import RoleProtectedRoute from './pages/layouts/RoleProtectedRoute';
 import { routes } from './routes';
-import HallCreateForm from './pages/HallCreateForm';
 
 function App() {
   return (

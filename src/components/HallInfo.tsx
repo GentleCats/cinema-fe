@@ -1,6 +1,7 @@
-import React from "react";
-import { Card, CardContent, Typography } from "@mui/material";
-import { Hall } from "@/models/Hall";
+import React from 'react';
+
+import { Hall } from '@/models/Hall';
+import { Card, CardContent, Typography } from '@mui/material';
 
 interface HallInfoProps {
   hall: Hall;

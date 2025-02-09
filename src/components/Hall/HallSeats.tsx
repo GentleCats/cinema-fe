@@ -1,11 +1,12 @@
-import { Hall } from "@/models/Hall";
-import { Paper, Typography, Grid, Tooltip, Checkbox, Button, Box } from "@mui/material";
-import { useState } from "react";
+import { useState } from 'react';
+
+import { Hall } from '@/models/Hall';
+import { Box, Button, Checkbox, Paper, Tooltip, Typography } from '@mui/material';
 
 interface SeatSelection {
-  seat: number; // Seat number
-  row: number;  // Row number
-  col: number;  // Column number
+  seat: number;
+  row: number;
+  col: number;
 }
 
 const HallSeats = ({ hall }: { hall: Hall }) => {
@@ -27,75 +28,67 @@ const HallSeats = ({ hall }: { hall: Hall }) => {
   };
 
   const bookTickets = () => {
-    console.log("Selected seats with details:", selectedSeats);
+    console.log('Selected seats with details:', selectedSeats);
   };
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ width: "100%", maxWidth: 800, p: 3, mb: 4 }}
-    >
-      <Typography variant="h6" gutterBottom sx={{textAlign: 'center'}}>
+    <Paper elevation={3} sx={{ width: '100%', maxWidth: 800, p: 3, mb: 4 }}>
+      <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
         {hall.name}
       </Typography>
       <Box
         sx={{
-          display: "flex",        
-          overflowX: "auto",      
-          overflowY: "visible",   
-          width: "100%",
-          "&::-webkit-scrollbar": {
-            height: "8px", 
+          display: 'flex',
+          overflowX: 'auto',
+          overflowY: 'visible',
+          width: '100%',
+          '&::-webkit-scrollbar': {
+            height: '8px',
           },
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#888",
-            borderRadius: "4px",   
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#888',
+            borderRadius: '4px',
           },
-          "&::-webkit-scrollbar-thumb:hover": {
-            backgroundColor: "#555", 
+          '&::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#555',
           },
-          "&::-webkit-scrollbar-track": {
-            backgroundColor: "#f1f1f1", 
-            borderRadius: "4px",
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: '#f1f1f1',
+            borderRadius: '4px',
           },
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "nowrap",
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'nowrap',
             gap: 1,
-            flexShrink: 0, 
-            margin: '0 auto'
+            flexShrink: 0,
+            margin: '0 auto',
           }}
         >
           {Array.from({ length: hall.rows }).map((_, rowIndex) => (
             <Box
               key={rowIndex}
               sx={{
-                display: "flex",
-                gap: 1, // Add gap between columns
-                flexShrink: 0, // Prevent column wrapping
+                display: 'flex',
+                gap: 1,
+                flexShrink: 0,
               }}
             >
               {Array.from({ length: hall.cols }).map((_, colIndex) => {
                 const seatNumber = rowIndex * hall.cols + colIndex + 1;
                 return (
-                  <Tooltip
-                    title={`Seat ${seatNumber} (Row: ${rowIndex + 1}, Col: ${colIndex + 1})`}
-                    key={colIndex}
-                  >
+                  <Tooltip title={`Seat ${seatNumber} (Row: ${rowIndex + 1}, Col: ${colIndex + 1})`} key={colIndex}>
                     <Checkbox
                       checked={isChecked(seatNumber)}
-                      onChange={() =>
-                        toggleSeat(seatNumber, rowIndex + 1, colIndex + 1)
-                      }
+                      onChange={() => toggleSeat(seatNumber, rowIndex + 1, colIndex + 1)}
                       color="primary"
                       sx={{
                         width: 48,
                         height: 48,
-                        "& .MuiSvgIcon-root": { fontSize: 28 },
+                        '& .MuiSvgIcon-root': { fontSize: 28 },
                       }}
                     />
                   </Tooltip>
@@ -106,12 +99,7 @@ const HallSeats = ({ hall }: { hall: Hall }) => {
         </Box>
       </Box>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={bookTickets}
-        sx={{ mt: 4 }}
-      >
+      <Button variant="contained" color="primary" onClick={bookTickets} sx={{ mt: 4 }}>
         Book Tickets
       </Button>
     </Paper>

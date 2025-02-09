@@ -1,11 +1,11 @@
 // import ExploreIcon from '@mui/icons-material/Explore';
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Theaters } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SvgIconProps } from '@mui/material';
-import { Theaters } from '@mui/icons-material';
 
 export const routes = {
   PUBLIC: {
@@ -58,7 +58,7 @@ export const sidebarLinks: SidebarLink[] = [
     route: routes.PUBLIC.TICKET_BOOKING,
   },
   {
-    icon: Theaters, 
+    icon: Theaters,
     label: 'Halls',
     route: routes.PRIVATE.HALLS,
   },
