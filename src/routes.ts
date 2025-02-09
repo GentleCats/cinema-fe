@@ -1,10 +1,11 @@
 // import ExploreIcon from '@mui/icons-material/Explore';
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Theaters } from '@mui/icons-material';
 import HomeIcon from '@mui/icons-material/Home';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { SvgIconProps } from '@mui/material';
-import { Theaters } from '@mui/icons-material';
 
 export const routes = {
   PUBLIC: {
@@ -14,6 +15,7 @@ export const routes = {
     PROFILE: '/profile',
     LOGIN: '/login',
     REGISTER: '/register',
+    TICKET_BOOKING: '/ticket-booking',
   },
   PRIVATE: {
     HOME: '/admin',
@@ -51,7 +53,12 @@ export const sidebarLinks: SidebarLink[] = [
     route: routes.PUBLIC.PROFILE,
   },
   {
-    icon: Theaters, 
+    icon: LocalActivityIcon,
+    label: 'Ticket Booking',
+    route: routes.PUBLIC.TICKET_BOOKING,
+  },
+  {
+    icon: Theaters,
     label: 'Halls',
     route: routes.PRIVATE.HALLS,
   },

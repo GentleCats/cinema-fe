@@ -1,11 +1,14 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Container, Typography, IconButton } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Film } from "../models/Film";
-import Loader from "../components/Loader";
-import FilmInfo from "@/components/FilmInfo";
-import { geMovie } from "@/api/movieAPI";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { geMovie } from '@/api/movieAPI';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Container, IconButton, Typography } from '@mui/material';
+
+import FilmInfo from '@/components/FilmInfo';
+
+import Loader from '../components/Loader';
+import { Film } from '../models/Film';
 
 const FilmDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,8 +47,8 @@ const FilmDetails = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-       {/* Кнопка "Назад" */}
-       <IconButton onClick={() => navigate(-1)} sx={{ mb: 2, color: "yellow" }}>
+      {/* Кнопка "Назад" */}
+      <IconButton onClick={() => navigate(-1)} sx={{ mb: 2, color: 'yellow' }}>
         <ArrowBackIcon fontSize="large" />
       </IconButton>
       <FilmInfo film={film} />

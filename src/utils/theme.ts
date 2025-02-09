@@ -35,11 +35,11 @@ const darkTheme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          "& .MuiInputBase-input.Mui-disabled": {
-            WebkitTextFillColor: "black", 
+          '& .MuiInputBase-input.Mui-disabled': {
+            WebkitTextFillColor: 'black',
           },
-          "& .MuiInputLabel-root.Mui-disabled": {
-            color: "black", 
+          '& .MuiInputLabel-root.Mui-disabled': {
+            color: 'black',
           },
         },
       },
