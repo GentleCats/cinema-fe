@@ -48,3 +48,12 @@ export const hallValidation = z.object({
   rows: z.number().positive(),
   capacity: z.number().positive(),
 });
+
+export const sessionValidation = z.object({
+  startTime: z.string().regex(/^\d{2}:\d{2}$/),
+  endTime: z.string().regex(/^\d{2}:\d{2}$/),
+  date: z.date(),
+  hallId: z.number(),
+  movieId: z.number(),
+  price: z.number().positive(),
+});

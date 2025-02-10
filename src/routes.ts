@@ -20,8 +20,10 @@ export const routes = {
   PRIVATE: {
     HOME: '/admin',
     FILMS: '/admin/film',
+    PROD_FILMS: '/admin/prod_films',
     HALLS: '/admin/halls',
     HALLS_CREATE: '/admin/halls/create',
+    SESSIONS_CREATE: '/admin/sessions/create',
   },
   API: {
     ACCOUNT: '/Account',

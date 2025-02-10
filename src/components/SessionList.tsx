@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { geMovie } from '@/api/movieAPI';
+import { getSessions } from '@/api/sessionAPI';
+import { routes } from '@/routes';
 import { Box, Button, Grid, List, Typography } from '@mui/material';
 
-import axiosInstance from '@/utils/axios';
+import { useAuth } from '@/hooks/AuthContext';
 
 import { Session } from '../models/Session';
 import Loader from './Loader';
@@ -13,14 +17,19 @@ interface SessionListProps {
 }
 
 const SessionList = ({ filmId }: SessionListProps) => {
+  const navigate = useNavigate();
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const isAdmin = user?.roles?.includes('Admin');
 
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const response = await axiosInstance.get(`/Sessions/get-by-film-id/${filmId}`);
-        setSessions(response.data);
+        const movie = await geMovie(+filmId);
+        const movieId = movie ? movie.id : +filmId;
+        const sessions = await getSessions(movieId);
+        setSessions(sessions);
       } catch (error) {
         console.error('Error fetching sessions:', error);
       } finally {
@@ -32,8 +41,9 @@ const SessionList = ({ filmId }: SessionListProps) => {
   }, [filmId]);
 
   const handleAddSession = () => {
-    alert(`Sorry, but the session cannot be added at this time!`);
+    navigate(`${routes.PRIVATE.SESSIONS_CREATE}/${filmId}`);
   };
+
   return (
     <Box sx={{ mt: 4 }}>
       <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
@@ -43,25 +53,27 @@ const SessionList = ({ filmId }: SessionListProps) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Button
-            variant="outlined"
-            onClick={handleAddSession}
-            sx={{
-              borderColor: 'yellow',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: 'yellow',
-                color: 'black',
-              },
-              padding: '6px 16px',
-              fontSize: '12px',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ fontSize: '18px', marginRight: '8px' }}>+</span>
-            ADD SESSION
-          </Button>
+          {isAdmin && (
+            <Button
+              variant="outlined"
+              onClick={handleAddSession}
+              sx={{
+                borderColor: 'yellow',
+                color: 'white',
+                '&:hover': {
+                  backgroundColor: 'yellow',
+                  color: 'black',
+                },
+                padding: '6px 16px',
+                fontSize: '12px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <span style={{ fontSize: '18px', marginRight: '8px' }}>+</span>
+              ADD SESSION
+            </Button>
+          )}
         </Grid>
       </Grid>
 

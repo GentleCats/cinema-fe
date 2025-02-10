@@ -49,10 +49,7 @@ const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
 
   useEffect(() => {
     const isMovieInProd = async (id: number) => {
-      console.log(id);
       const movie = await geMovie(id);
-      console.log(movie);
-
       setIsInProduction(Boolean(movie));
     };
     isMovieInProd(film.id);

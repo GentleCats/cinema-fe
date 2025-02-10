@@ -11,6 +11,7 @@ import HallCreateForm from './pages/HallCreateForm';
 import Halls from './pages/Halls';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import SessionCreateForm from './pages/SessionCreateForm';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import AuthLayout from './pages/layouts/AuthLayout';
@@ -33,7 +34,7 @@ function App() {
           <Route path={routes.PUBLIC.HOME} element={<Home />} />
           <Route path={routes.PUBLIC.PROFILE} element={<Profile />} />
           <Route path={`${routes.PUBLIC.FILMS}/:id`} element={<FilmDetails />} />
-          <Route path={routes.PUBLIC.TICKET_BOOKING} element={<TicketBooking />} />
+          <Route path={`${routes.PUBLIC.TICKET_BOOKING}/:hallId`} element={<TicketBooking />} />
         </Route>
         <Route
           element={
@@ -48,6 +49,7 @@ function App() {
           <Route path={`${routes.PRIVATE.FILMS}/:id`} element={<FilmManaging />} />
           <Route path={routes.PRIVATE.HALLS} element={<Halls />} />
           <Route path={routes.PRIVATE.HALLS_CREATE} element={<HallCreateForm />} />
+          <Route path={`${routes.PRIVATE.SESSIONS_CREATE}/:id`} element={<SessionCreateForm />} />
         </Route>
         <Route element={<AuthLayout />}>
           <Route path={routes.PUBLIC.REGISTER} element={<SignUp />} />

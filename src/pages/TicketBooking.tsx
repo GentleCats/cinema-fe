@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { getHall } from '@/api/hallAPI';
 import { Box } from '@mui/material';
 
 import HallSeats from '@/components/Hall/HallSeats';
@@ -5,17 +9,21 @@ import HallSeats from '@/components/Hall/HallSeats';
 import { Hall } from '../models/Hall';
 
 const TicketBooking: React.FC = () => {
-  const hall: Hall = {
-    id: 100,
-    name: 'Hall_Name',
-    capacity: 100,
-    rows: 8,
-    cols: 10,
-  };
+  const { hallId } = useParams<{ hallId: string }>();
+  const [hall, setHall] = useState<Hall>();
+
+  useEffect(() => {
+    if (!hallId) return;
+    const fetchHall = async () => {
+      const hall = await getHall(+hallId);
+      setHall(hall);
+    };
+    fetchHall();
+  }, []);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-      <HallSeats hall={hall || []} />
+      {hall && <HallSeats hall={hall} />}
     </Box>
   );
 };
