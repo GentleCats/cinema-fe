@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { registerUser } from '@/api/authAPI';
 import { routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { z } from 'zod';
-
 import Loader from '@/components/Loader';
-
 import { registerValidation } from '@/utils/zod-validation';
 
 const SignUp = () => {
   const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   type RegisterValidationType = z.infer<typeof registerValidation>;
   const formMethods = useForm<RegisterValidationType>({
     resolver: zodResolver(registerValidation),
@@ -65,41 +65,19 @@ const SignUp = () => {
       <Typography variant="h4" gutterBottom>
         Sign Up
       </Typography>
-      <Box
-        sx={{
-          color: 'text.primary',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          mt: 2,
-        }}
-      >
+      <Box sx={{ color: 'text.primary', display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
         <Controller
           name="username"
           control={control}
           render={({ field }) => (
-            <TextField
-              {...field}
-              label="Username"
-              variant="outlined"
-              error={!!errors.username}
-              helperText={errors.username?.message}
-              fullWidth
-            />
+            <TextField {...field} label="Username" variant="outlined" error={!!errors.username} helperText={errors.username?.message} fullWidth />
           )}
         />
         <Controller
           name="email"
           control={control}
           render={({ field }) => (
-            <TextField
-              {...field}
-              label="Email"
-              variant="outlined"
-              error={!!errors.email}
-              helperText={errors.email?.message}
-              fullWidth
-            />
+            <TextField {...field} label="Email" variant="outlined" error={!!errors.email} helperText={errors.email?.message} fullWidth />
           )}
         />
         <Controller
@@ -109,11 +87,20 @@ const SignUp = () => {
             <TextField
               {...field}
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               variant="outlined"
               error={!!errors.password}
               helperText={errors.password?.message}
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+                      {showPassword ? <Visibility sx={{ color: 'white' }} /> : <VisibilityOff sx={{ color: 'white' }} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -124,11 +111,20 @@ const SignUp = () => {
             <TextField
               {...field}
               label="Repeat Password"
-              type="password"
+              type={showConfirm ? 'text' : 'password'}
               variant="outlined"
               error={!!errors.confirm}
               helperText={errors.confirm?.message}
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowConfirm((prev) => !prev)}>
+                      {showConfirm ? <Visibility sx={{ color: 'white' }} /> : <VisibilityOff sx={{ color: 'white' }} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -138,22 +134,14 @@ const SignUp = () => {
         variant="contained"
         color="primary"
         disabled={!isValid}
-        sx={{
-          mt: 3,
-          width: '100%',
-        }}
+        sx={{ mt: 3, width: '100%' }}
       >
         Sign Up
       </Button>
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center', gap: 2 }}>
         <Typography variant="body2">Already have an account? </Typography>
         <Link to={routes.PUBLIC.LOGIN} style={{ textDecoration: 'none' }}>
-          <Typography
-            variant="body2"
-            sx={{
-              color: 'text.secondary',
-            }}
-          >
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Sign In
           </Typography>
         </Link>
