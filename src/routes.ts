@@ -20,8 +20,10 @@ export const routes = {
   PRIVATE: {
     HOME: '/admin',
     FILMS: '/admin/film',
+    PROD_FILMS: '/admin/prod_films',
     HALLS: '/admin/halls',
     HALLS_CREATE: '/admin/halls/create',
+    SESSIONS_CREATE: '/admin/sessions/create',
   },
   API: {
     ACCOUNT: '/Account',
@@ -51,11 +53,6 @@ export const sidebarLinks: SidebarLink[] = [
     icon: PermIdentityIcon,
     label: 'profile',
     route: routes.PUBLIC.PROFILE,
-  },
-  {
-    icon: LocalActivityIcon,
-    label: 'Ticket Booking',
-    route: routes.PUBLIC.TICKET_BOOKING,
   },
   {
     icon: Theaters,

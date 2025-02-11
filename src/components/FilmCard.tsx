@@ -1,18 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Film } from '@/models/Film';
 import { routes } from '@/routes';
 import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 
+import { useAuth } from '@/hooks/AuthContext';
+
 const FilmCard = ({ film }: { film: Film }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+  const isAdmin = user?.roles?.includes('Admin');
+  const isHome = location.pathname === routes.PRIVATE.HOME;
 
-  const handleNavigate = (film: Film) => {
+  const handleFilmInfoNavigate = (film: Film) => {
     if (film.tmdbId) {
       navigate(`${routes.PUBLIC.FILMS}/${film.tmdbId}`);
       return;
     }
     navigate(`${routes.PRIVATE.FILMS}/${film.id}`);
+  };
+  const handleFilmManaginNavigate = (film: Film) => {
+    navigate(`${routes.PRIVATE.FILMS}/${film.tmdbId}`);
   };
 
   return (
@@ -58,11 +67,22 @@ const FilmCard = ({ film }: { film: Film }) => {
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ marginTop: 'auto' }}
-          onClick={() => handleNavigate(film)}
+          sx={{ mt: 2 }}
+          onClick={() => handleFilmInfoNavigate(film)}
         >
           View Details
         </Button>
+        {isAdmin && !isHome && (
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={() => handleFilmManaginNavigate(film)}
+          >
+            Manage
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

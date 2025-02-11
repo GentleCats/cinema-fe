@@ -6,6 +6,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Container, IconButton, Typography } from '@mui/material';
 
 import FilmInfo from '@/components/FilmInfo';
+import SessionList from '@/components/SessionList';
 
 import Loader from '../components/Loader';
 import { Film } from '../models/Film';
@@ -53,7 +54,7 @@ const FilmDetails = () => {
       </IconButton>
       <FilmInfo film={film} />
 
-      {/* <SessionList filmId={film.id.toString()} /> */}
+      <SessionList filmId={film.id.toString()} />
     </Container>
   );
 };

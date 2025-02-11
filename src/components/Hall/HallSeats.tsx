@@ -1,7 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { getHall } from '@/api/hallAPI';
+import { getTicketsBySessionId } from '@/api/ticketAPI';
 import { Hall } from '@/models/Hall';
+import { Session } from '@/models/Session';
 import { Box, Button, Checkbox, Paper, Tooltip, Typography } from '@mui/material';
+
+import axiosInstance from '@/utils/axios';
+
+import Loader from '../Loader';
 
 interface SeatSelection {
   seat: number;
@@ -9,8 +16,30 @@ interface SeatSelection {
   col: number;
 }
 
-const HallSeats = ({ hall }: { hall: Hall }) => {
+const HallSeats = ({ session }: { session: Session }) => {
   const [selectedSeats, setSelectedSeats] = useState<SeatSelection[]>([]);
+  const [hall, setHall] = useState<Hall>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [bookedSeats, setBookedSeats] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchHall = async () => {
+      try {
+        setIsLoading(true);
+        const hall = await getHall(+session.hallId);
+        const tickets = await getTicketsBySessionId(+session.id);
+        const booked = tickets.map((t) => t.seat);
+        setBookedSeats(booked);
+
+        setHall(hall);
+      } catch (err) {
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchHall();
+  }, []);
 
   const toggleSeat = (seat: number, row: number, col: number) => {
     setSelectedSeats((prev) => {
@@ -24,12 +53,28 @@ const HallSeats = ({ hall }: { hall: Hall }) => {
   };
 
   const isChecked = (seat: number) => {
-    return selectedSeats.some((s) => s.seat === seat);
+    return selectedSeats.some((s) => s.seat === seat) || isDisabled(seat);
   };
 
-  const bookTickets = () => {
-    console.log('Selected seats with details:', selectedSeats);
+  const isDisabled = (seat: number) => {
+    return bookedSeats.includes(seat);
   };
+
+  const bookTickets = async () => {
+    selectedSeats.map(async (seat) => {
+      const ticket = {
+        row: seat.row,
+        col: seat.col,
+        seat: seat.seat,
+        sessionId: session.id,
+      };
+      await axiosInstance.post(`/Ticket/create`, { ...ticket });
+    });
+  };
+
+  if (isLoading || !hall) {
+    return <Loader />;
+  }
 
   return (
     <Paper elevation={3} sx={{ width: '100%', maxWidth: 800, p: 3, mb: 4 }}>
@@ -83,6 +128,7 @@ const HallSeats = ({ hall }: { hall: Hall }) => {
                   <Tooltip title={`Seat ${seatNumber} (Row: ${rowIndex + 1}, Col: ${colIndex + 1})`} key={colIndex}>
                     <Checkbox
                       checked={isChecked(seatNumber)}
+                      disabled={isDisabled(seatNumber)}
                       onChange={() => toggleSeat(seatNumber, rowIndex + 1, colIndex + 1)}
                       color="primary"
                       sx={{

@@ -62,10 +62,14 @@ const FilmManaging = () => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <FilmCreateForm film={film} setFilm={setFilm} />
+
       <Typography variant="h4" gutterBottom sx={{ py: 4 }}>
         Preview
       </Typography>
+
       <FilmInfo film={film} />
+
+      <SessionList filmId={film.id.toString()} />
 
       <Box
         sx={{
@@ -93,8 +97,6 @@ const FilmManaging = () => {
           Delete Film
         </Button>
       </Box>
-
-      {/* <SessionList filmId={film.id.toString()} /> */}
     </Container>
   );
 };

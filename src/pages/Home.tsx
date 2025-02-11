@@ -8,7 +8,7 @@ import PaginationComponent from '@/components/Pagination';
 
 import axiosInstance from '@/utils/axios';
 
-const AdminHome: React.FC = () => {
+const Home: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);
   const [page, setPage] = useState<number>(1);
   const [filmsPerPage] = useState<number>(20);
@@ -41,4 +41,4 @@ const AdminHome: React.FC = () => {
   );
 };
 
-export default AdminHome;
+export default Home;
