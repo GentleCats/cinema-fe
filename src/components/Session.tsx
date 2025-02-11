@@ -18,8 +18,8 @@ const Session = ({ session }: SessionProps) => {
   const { user } = useAuth();
   const isAdmin = user?.roles?.includes('Admin');
 
-  const handleBookSession = (hallId: number) => {
-    navigate(`${routes.PUBLIC.TICKET_BOOKING}/${hallId}`);
+  const handleBookSession = (sessionId: number) => {
+    navigate(`${routes.PUBLIC.TICKET_BOOKING}/${sessionId}`);
   };
   const handleDelete = async (id: number) => {
     await deleteSession(id);
@@ -37,7 +37,7 @@ const Session = ({ session }: SessionProps) => {
         />
         <Button
           variant="contained"
-          onClick={() => handleBookSession(session.hallId)}
+          onClick={() => handleBookSession(session.id)}
           sx={{
             marginLeft: 2,
             border: '2px solid yellow',

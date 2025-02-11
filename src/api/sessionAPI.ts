@@ -8,6 +8,10 @@ export const getSessions = async (id: number): Promise<Session[]> => {
   const { data } = await axiosInstance.get(`/Session/get-by-film-id/${id}`);
   return data;
 };
+export const getSession = async (id: number): Promise<Session> => {
+  const { data } = await axiosInstance.get(`/Session/${id}`);
+  return data;
+};
 export const deleteSession = async (id: number): Promise<void> => {
   await axiosInstance.delete(`/Session/${id}`);
 };

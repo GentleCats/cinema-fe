@@ -34,7 +34,7 @@ function App() {
           <Route path={routes.PUBLIC.HOME} element={<Home />} />
           <Route path={routes.PUBLIC.PROFILE} element={<Profile />} />
           <Route path={`${routes.PUBLIC.FILMS}/:id`} element={<FilmDetails />} />
-          <Route path={`${routes.PUBLIC.TICKET_BOOKING}/:hallId`} element={<TicketBooking />} />
+          <Route path={`${routes.PUBLIC.TICKET_BOOKING}/:sessionId`} element={<TicketBooking />} />
         </Route>
         <Route
           element={

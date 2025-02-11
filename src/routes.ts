@@ -55,11 +55,6 @@ export const sidebarLinks: SidebarLink[] = [
     route: routes.PUBLIC.PROFILE,
   },
   {
-    icon: LocalActivityIcon,
-    label: 'Ticket Booking',
-    route: routes.PUBLIC.TICKET_BOOKING,
-  },
-  {
     icon: Theaters,
     label: 'Halls',
     route: routes.PRIVATE.HALLS,
