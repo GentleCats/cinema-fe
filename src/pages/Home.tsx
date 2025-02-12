@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-
 import { getSorted } from '@/api/movieAPI';
 import { Film, FilmWithSessions } from '@/models/Film';
 import { Session } from '@/models/Session';
 import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
-
 import ListFilm from '@/components/Film/FilmList';
 import FilmSessionList from '@/components/Film/FilmSessionList';
 import PaginationComponent from '@/components/Pagination';
+import NotFound from '@/components/NotFound';
+import Loader from '@/components/Loader';
 
 import axiosInstance from '@/utils/axios';
 
@@ -16,6 +16,7 @@ const Home: React.FC = () => {
   const [sortType, setSortType] = useState('date');
   // const [page, setPage] = useState<number>(1);
   // const [filmsPerPage] = useState<number>(20);
+  const [isLoading, setIsLoading] = useState<boolean>(true); 
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -47,7 +48,11 @@ const Home: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Home User Page
       </Typography>
-      <FormControl fullWidth sx={{ marginBottom: 4 }}>
+      {isLoading ? (
+        <Loader /> 
+      ) : films.length > 0 ? (
+        <>
+          <FormControl fullWidth sx={{ marginBottom: 4 }}>
         <InputLabel id="sort-select-label">Sort By</InputLabel>
         <Select labelId="sort-select-label" value={sortType} onChange={handleSortChange} label="Sort By">
           <MenuItem value="date">Date</MenuItem>
@@ -58,8 +63,12 @@ const Home: React.FC = () => {
         </Select>
       </FormControl>
       {/* <ListFilm films={currentFilms} /> */}
-      <FilmSessionList films={films} />
+          <FilmSessionList films={films} />
       {/* <PaginationComponent count={totalPages} page={page} onPageChange={handlePageChange} /> */}
+        </>
+      ) : (
+        <NotFound /> 
+      )}
     </Container>
   );
 };

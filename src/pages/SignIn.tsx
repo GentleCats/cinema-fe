@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '@/api/authAPI';
 import { routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography, IconButton, InputAdornment} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { z } from 'zod';
 
 import Loader from '@/components/Loader';
@@ -19,6 +20,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
 
   type LoginValidationType = z.infer<typeof loginValidation>;
   const formMethods = useForm<LoginValidationType>({
@@ -58,6 +60,7 @@ const SignIn = () => {
   if (isLoading) {
     return <Loader />;
   }
+
   return (
     <Paper
       component="form"
@@ -75,15 +78,7 @@ const SignIn = () => {
         Sign In
       </Typography>
 
-      <Box
-        sx={{
-          color: 'text.primary',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2,
-          mt: 2,
-        }}
-      >
+      <Box sx={{ color: 'text.primary', display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
         <Controller
           name="username"
           control={control}
@@ -105,11 +100,20 @@ const SignIn = () => {
             <TextField
               {...field}
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               variant="outlined"
               error={!!errors.password}
               helperText={errors.password?.message}
               fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    {showPassword ? <Visibility sx={{ color: 'white' }} /> : <VisibilityOff sx={{ color: 'white' }} />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
         />
@@ -119,22 +123,14 @@ const SignIn = () => {
         variant="contained"
         color="primary"
         disabled={!isValid}
-        sx={{
-          mt: 3,
-          width: '100%',
-        }}
+        sx={{ mt: 3, width: '100%' }}
       >
         Sign In
       </Button>
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center', gap: 2 }}>
-        <Typography variant="body2">Don't have acc? </Typography>
+        <Typography variant="body2">Don't have an account? </Typography>
         <Link to={routes.PUBLIC.REGISTER} style={{ textDecoration: 'none' }}>
-          <Typography
-            variant="body2"
-            sx={{
-              color: 'text.secondary',
-            }}
-          >
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             Sign Up
           </Typography>
         </Link>
