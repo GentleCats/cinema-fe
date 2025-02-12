@@ -4,10 +4,10 @@ import { useSearchParams } from 'react-router-dom';
 import { Film } from '@/models/Film';
 import { Container, Typography } from '@mui/material';
 
+import ListFilm from '@/components/Film/FilmList';
 import PaginationComponent from '@/components/Pagination';
 
 import axiosInstance from '@/utils/axios';
-import ListFilm from '@/components/Film/FilmList';
 
 const AdminHome: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);

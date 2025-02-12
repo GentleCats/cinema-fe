@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { geMovie } from '@/api/movieAPI';
+import { Film } from '@/models/Film';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Container, IconButton, Typography } from '@mui/material';
-import { Film } from '@/models/Film';
-import Loader from '@/components/Loader';
+
 import FilmInfo from '@/components/Film/FilmInfo';
+import Loader from '@/components/Loader';
 import SessionList from '@/components/Session/SessionList';
 
 const FilmDetails = () => {

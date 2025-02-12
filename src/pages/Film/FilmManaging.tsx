@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { deleteMovie } from '@/api/movieAPI';
+import { Film } from '@/models/Film';
 import { routes } from '@/routes';
 import { Box, Button, Container, Typography } from '@mui/material';
 
-
-import axiosInstance from '@/utils/axios';
 import FilmCreateForm from '@/components/Film/FilmCreateForm';
 import FilmInfo from '@/components/Film/FilmInfo';
 import Loader from '@/components/Loader';
 import SessionList from '@/components/Session/SessionList';
-import { Film } from '@/models/Film';
+
+import axiosInstance from '@/utils/axios';
 
 const FilmManaging = () => {
   const { id } = useParams<{ id: string }>();

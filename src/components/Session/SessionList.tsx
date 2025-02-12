@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { geMovie } from '@/api/movieAPI';
 import { getSessions } from '@/api/sessionAPI';
+import { Session } from '@/models/Session';
 import { routes } from '@/routes';
 import { Box, Button, Grid, List, Typography } from '@mui/material';
 
 import { useAuth } from '@/hooks/AuthContext';
 
-import { Session } from '@/models/Session';
-import SessionComponent from './Session';
 import Loader from '../Loader';
+import SessionComponent from './Session';
 
 interface SessionListProps {
   filmId: string;
