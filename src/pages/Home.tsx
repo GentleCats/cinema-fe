@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Film } from '@/models/Film';
 import { Container, Typography } from '@mui/material';
 
-import ListFilm from '@/components/FilmList';
 import PaginationComponent from '@/components/Pagination';
 
 import axiosInstance from '@/utils/axios';
+import ListFilm from '@/components/Film/FilmList';
 
 const Home: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);

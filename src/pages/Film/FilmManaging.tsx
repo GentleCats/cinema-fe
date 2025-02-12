@@ -5,14 +5,13 @@ import { deleteMovie } from '@/api/movieAPI';
 import { routes } from '@/routes';
 import { Box, Button, Container, Typography } from '@mui/material';
 
-import FilmCreateForm from '@/components/FilmCreateForm';
-import FilmInfo from '@/components/FilmInfo';
 
 import axiosInstance from '@/utils/axios';
-
-import Loader from '../components/Loader';
-import SessionList from '../components/SessionList';
-import { Film } from '../models/Film';
+import FilmCreateForm from '@/components/Film/FilmCreateForm';
+import FilmInfo from '@/components/Film/FilmInfo';
+import Loader from '@/components/Loader';
+import SessionList from '@/components/Session/SessionList';
+import { Film } from '@/models/Film';
 
 const FilmManaging = () => {
   const { id } = useParams<{ id: string }>();

@@ -8,9 +8,9 @@ import { Box, Button, Grid, List, Typography } from '@mui/material';
 
 import { useAuth } from '@/hooks/AuthContext';
 
-import { Session } from '../models/Session';
-import Loader from './Loader';
+import { Session } from '@/models/Session';
 import SessionComponent from './Session';
+import Loader from '../Loader';
 
 interface SessionListProps {
   filmId: string;

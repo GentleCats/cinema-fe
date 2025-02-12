@@ -5,13 +5,8 @@ import { Box } from '@mui/material';
 import TicketBooking from '@/pages/TicketBooking.tsx';
 
 import AdminHome from './pages/AdminHome';
-import FilmDetails from './pages/FilmDetails';
-import FilmManaging from './pages/FilmManaging';
-import HallCreateForm from './pages/HallCreateForm';
-import Halls from './pages/Halls';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import SessionCreateForm from './pages/SessionCreateForm';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import AuthLayout from './pages/layouts/AuthLayout';
@@ -19,6 +14,11 @@ import BaseLayout from './pages/layouts/BaseLayout';
 import ProtectedRoute from './pages/layouts/ProtectedRoute';
 import RoleProtectedRoute from './pages/layouts/RoleProtectedRoute';
 import { routes } from './routes';
+import FilmDetails from './pages/Film/FilmDetails';
+import FilmManaging from './pages/Film/FilmManaging';
+import HallCreateForm from './pages/Hall/HallCreateForm';
+import Halls from './pages/Hall/Halls';
+import SessionCreateForm from './pages/Session/SessionCreateForm';
 
 function App() {
   return (

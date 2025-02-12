@@ -7,7 +7,7 @@ import { Button, Divider, IconButton, ListItem, ListItemText } from '@mui/materi
 
 import { useAuth } from '@/hooks/AuthContext';
 
-import type { Session } from '../models/Session';
+import type { Session } from '@/models/Session';
 
 interface SessionProps {
   session: Session;
