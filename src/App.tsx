@@ -5,13 +5,13 @@ import { Box } from '@mui/material';
 import TicketBooking from '@/pages/TicketBooking.tsx';
 
 import AdminHome from './pages/AdminHome';
-import FilmDetails from './pages/FilmDetails';
-import FilmManaging from './pages/FilmManaging';
-import HallCreateForm from './pages/HallCreateForm';
-import Halls from './pages/Halls';
+import FilmDetails from './pages/Film/FilmDetails';
+import FilmManaging from './pages/Film/FilmManaging';
+import HallCreateForm from './pages/Hall/HallCreateForm';
+import Halls from './pages/Hall/Halls';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import SessionCreateForm from './pages/SessionCreateForm';
+import SessionCreateForm from './pages/Session/SessionCreateForm';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import AuthLayout from './pages/layouts/AuthLayout';

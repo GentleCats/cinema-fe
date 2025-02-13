@@ -1,4 +1,4 @@
-import { Film } from '@/models/Film';
+import { Film, FilmWithSessions } from '@/models/Film';
 import { z } from 'zod';
 
 import axiosInstance from '@/utils/axios';
@@ -19,4 +19,9 @@ export const updateMovie = async (id: number, filmUpdate: Partial<z.infer<typeof
 export const geMovie = async (id: number): Promise<Film> => {
   const { data: movie } = await axiosInstance.get(`/Movie/get-by-id/${id}`);
   return movie;
+};
+
+export const getSorted = async (sortType: string): Promise<FilmWithSessions[]> => {
+  const { data } = await axiosInstance.get(`/Movie/get-sorted?sortType=${sortType}`);
+  return data;
 };

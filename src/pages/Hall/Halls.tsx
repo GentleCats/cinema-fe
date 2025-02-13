@@ -7,7 +7,7 @@ import { routes } from '@/routes';
 import { Delete } from '@mui/icons-material';
 import { Box, Button, Container, Grid, IconButton, Typography } from '@mui/material';
 
-import HallInfo from '@/components/HallInfo';
+import HallInfo from '@/components/Hall/HallInfo';
 
 const Halls: React.FC = () => {
   const [halls, setHalls] = useState<Hall[]>([]);

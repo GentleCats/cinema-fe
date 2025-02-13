@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Film } from '@/models/Film';
 import { Container, Typography } from '@mui/material';
 
-import ListFilm from '@/components/FilmList';
+import ListFilm from '@/components/Film/FilmList';
 import PaginationComponent from '@/components/Pagination';
 import NotFound from '@/components/NotFound';
 import Loader from '@/components/Loader';

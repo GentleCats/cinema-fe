@@ -1,3 +1,5 @@
+import { Session } from './Session';
+
 export interface Film {
   id: number;
   tmdbId?: number;
@@ -13,4 +15,8 @@ export interface Film {
   rating: number;
   trailerUrl?: string;
   imageUrl?: string;
+}
+
+export interface FilmWithSessions extends Film {
+  sessions: Session[];
 }

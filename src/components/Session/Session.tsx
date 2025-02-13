@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 
 import { deleteSession } from '@/api/sessionAPI';
+import type { Session } from '@/models/Session';
 import { routes } from '@/routes';
 import { Delete } from '@mui/icons-material';
 import { Button, Divider, IconButton, ListItem, ListItemText } from '@mui/material';
 
 import { useAuth } from '@/hooks/AuthContext';
-
-import type { Session } from '../models/Session';
 
 interface SessionProps {
   session: Session;

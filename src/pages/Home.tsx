@@ -1,41 +1,40 @@
 import { useEffect, useState } from 'react';
-import { Film } from '@/models/Film';
-import { Container, Typography } from '@mui/material';
-import ListFilm from '@/components/FilmList';
-import PaginationComponent from '@/components/Pagination';
+import { getSorted } from '@/api/movieAPI';
+import { FilmWithSessions } from '@/models/Film';
+import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import FilmSessionList from '@/components/Film/FilmSessionList';
 import NotFound from '@/components/NotFound';
 import Loader from '@/components/Loader';
 
-import axiosInstance from '@/utils/axios';
 
 const Home: React.FC = () => {
-  const [films, setFilms] = useState<Film[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [filmsPerPage] = useState<number>(20);
+  const [films, setFilms] = useState<FilmWithSessions[]>([]);
+  const [sortType, setSortType] = useState('date');
+  // const [page, setPage] = useState<number>(1);
+  // const [filmsPerPage] = useState<number>(20);
   const [isLoading, setIsLoading] = useState<boolean>(true); 
 
   useEffect(() => {
-    axiosInstance
-      .get('/Movie/get-all')
-      .then((res) => {
-        setFilms(res.data);
-        setIsLoading(false); 
-      })
-      .catch((err) => {
-        console.error('Failed to fetch films', err);
-        setIsLoading(false);
-      });
-  }, []);
+    const fetchFilms = async () => {
+      const data = await getSorted(sortType);
+      setFilms(data);
+      setIsLoading(false);
+    };
+    fetchFilms();
+  }, [sortType]);
 
-  const indexOfLastFilm = page * filmsPerPage;
-  const indexOfFirstFilm = indexOfLastFilm - filmsPerPage;
-  const currentFilms = films.slice(indexOfFirstFilm, indexOfLastFilm);
+  // const indexOfLastFilm = page * filmsPerPage;
+  // const indexOfFirstFilm = indexOfLastFilm - filmsPerPage;
+  // const currentFilms = films.slice(indexOfFirstFilm, indexOfLastFilm);
 
-  const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
-    setPage(newPage);
+  // const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
+  //   setPage(newPage);
+  // };
+
+  // const totalPages = Math.ceil(films.length / filmsPerPage);
+  const handleSortChange = (event: SelectChangeEvent<string>) => {
+    setSortType(event.target.value as string);
   };
-
-  const totalPages = Math.ceil(films.length / filmsPerPage);
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
@@ -46,8 +45,19 @@ const Home: React.FC = () => {
         <Loader /> 
       ) : films.length > 0 ? (
         <>
-          <ListFilm films={currentFilms} />
-          <PaginationComponent count={totalPages} page={page} onPageChange={handlePageChange} />
+          <FormControl fullWidth sx={{ marginBottom: 4 }}>
+        <InputLabel id="sort-select-label">Sort By</InputLabel>
+        <Select labelId="sort-select-label" value={sortType} onChange={handleSortChange} label="Sort By">
+          <MenuItem value="date">Date</MenuItem>
+          <MenuItem value="title">Title</MenuItem>
+          <MenuItem value="genre">Genre</MenuItem>
+          <MenuItem value="sessions">Sessions</MenuItem>
+          <MenuItem value="duration">Duration</MenuItem>
+        </Select>
+      </FormControl>
+      {/* <ListFilm films={currentFilms} /> */}
+          <FilmSessionList films={films} />
+      {/* <PaginationComponent count={totalPages} page={page} onPageChange={handlePageChange} /> */}
         </>
       ) : (
         <NotFound /> 
