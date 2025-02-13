@@ -1,5 +1,4 @@
 import { Film, FilmWithSessions } from '@/models/Film';
-import { Session } from '@/models/Session';
 import { z } from 'zod';
 
 import axiosInstance from '@/utils/axios';

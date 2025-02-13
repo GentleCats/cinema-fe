@@ -19,25 +19,23 @@ const FilmSessionList: React.FC<ListFilmProps> = ({ films }) => {
   return (
     <Grid container spacing={3} sx={{ padding: 2 }}>
       {films.map((film) => (
-        <Grid item xs={12} key={film.id}>
+        <Grid item xs={12} sm={6} md={12} key={film.id}>
           <Card
             sx={{
               display: 'flex',
-              flexDirection: 'row',
+              flexDirection: {xs:'column',md:'row'},
               backgroundColor: 'transparent',
               boxShadow: 2,
               borderRadius: 2,
               color: 'text.primary',
-              height: '450px',
-              gap: 10,
+              height: {xs: 'auto',md:'auto'},
+              gap: {xs: 2,md:10},
             }}
           >
-            {/* Film Card */}
-            <Box sx={{ width: '30%' }}>
+            <Box >
               <FilmCard film={film} />
             </Box>
 
-            {/* Sessions List */}
             <Box
               sx={{
                 flex: 1,

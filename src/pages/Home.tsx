@@ -1,15 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getSorted } from '@/api/movieAPI';
-import { Film, FilmWithSessions } from '@/models/Film';
-import { Session } from '@/models/Session';
+import { FilmWithSessions } from '@/models/Film';
 import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
-import ListFilm from '@/components/Film/FilmList';
 import FilmSessionList from '@/components/Film/FilmSessionList';
-import PaginationComponent from '@/components/Pagination';
 import NotFound from '@/components/NotFound';
 import Loader from '@/components/Loader';
 
-import axiosInstance from '@/utils/axios';
 
 const Home: React.FC = () => {
   const [films, setFilms] = useState<FilmWithSessions[]>([]);
@@ -22,12 +18,9 @@ const Home: React.FC = () => {
     const fetchFilms = async () => {
       const data = await getSorted(sortType);
       setFilms(data);
+      setIsLoading(false);
     };
     fetchFilms();
-    axiosInstance
-      .get('/Movie/get-sorted?sortType=date')
-      .then((res) => setFilms(res.data))
-      .catch((err) => console.error('Failed to fetch films', err));
   }, [sortType]);
 
   // const indexOfLastFilm = page * filmsPerPage;
