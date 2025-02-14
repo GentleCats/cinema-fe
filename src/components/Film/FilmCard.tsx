@@ -25,7 +25,7 @@ const FilmCard = ({ film }: { film: Film }) => {
   };
 
   return (
-    <Card sx={{ width: {xs:'100%',md:'300px'},display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {film.imageUrl && (
         <CardMedia component="img" height="200" image={film.imageUrl} alt={film.title} sx={{ objectFit: 'cover' }} />
       )}

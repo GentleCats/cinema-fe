@@ -4,11 +4,16 @@ import { sidebarLinks } from '@/routes';
 import { Box, Divider, IconButton, Stack, Tooltip } from '@mui/material';
 
 import { styles } from './styles.mui';
+import { useAuth } from '@/hooks/AuthContext';
 
 const { leftNav: s } = styles;
 
-export const leftNav = (
-  <Box sx={s.wrapper}>
+const LeftNav = () => {
+  const {user} = useAuth();
+  const isAdmin = user?.roles?.includes('Admin');
+
+  return (
+    <Box sx={s.wrapper}>
     <Box sx={s.logoWrapper}>
       <Box sx={s.logoInner}>
         <img
@@ -24,7 +29,7 @@ export const leftNav = (
     <Box sx={s.stackWrapper}>
       <Stack spacing={2} sx={s.stack}>
         {sidebarLinks.map((link, idx) => (
-          <Link key={idx} to={link.route} style={s.link}>
+          (isAdmin || !link.isAdmin) && <Link key={idx} to={link.route} style={s.link}>
             <Tooltip title={link.label} arrow>
               <IconButton sx={s.icon}>
                 <link.icon />
@@ -35,4 +40,8 @@ export const leftNav = (
       </Stack>
     </Box>
   </Box>
-);
+  );
+}
+
+export default LeftNav; 
+
