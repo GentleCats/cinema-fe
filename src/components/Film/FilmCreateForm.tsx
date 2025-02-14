@@ -12,13 +12,15 @@ import dayjs from 'dayjs';
 import { z } from 'zod';
 
 import { filmValidation } from '@/utils/zod-validation';
+import { routes } from '@/routes';
 
 interface IFilmCreateForm {
   film: Film;
   setFilm: React.Dispatch<React.SetStateAction<Film | undefined>>;
+  id: string;
 }
 
-const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
+const FilmCreateForm = ({ film, setFilm, id }: IFilmCreateForm) => {
   const navigate = useNavigate();
   const [isInProduction, setIsInProduction] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,11 +50,11 @@ const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
   } = formMethods;
 
   useEffect(() => {
-    const isMovieInProd = async (id: number) => {
-      const movie = await geMovie(id);
+    const isMovieInProd = async () => {
+      const movie = await geMovie(+id);
       setIsInProduction(Boolean(movie));
     };
-    isMovieInProd(film.id);
+    isMovieInProd();
   }, [film.id]);
 
   const renderTextField = (name: keyof FilmValidationType, label: string, multiline = false) => (
@@ -77,10 +79,12 @@ const FilmCreateForm = ({ film, setFilm }: IFilmCreateForm) => {
     try {
       setIsLoading(true);
       if (isInProduction) {
-        await updateMovie(film.id, data);
+        await updateMovie(+id, data);
+        navigate(routes.PUBLIC.HOME)
         return;
       }
       await createMovie(data, film.id);
+      navigate(routes.PUBLIC.HOME);
     } catch (err) {
       setIsLoading(false);
     }

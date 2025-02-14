@@ -21,7 +21,12 @@ export const geMovie = async (id: number): Promise<Film> => {
   return movie;
 };
 
-export const getSorted = async (sortType: string): Promise<FilmWithSessions[]> => {
-  const { data } = await axiosInstance.get(`/Movie/get-sorted?sortType=${sortType}`);
+export const getSorted = async (sortType: string, genre:string): Promise<FilmWithSessions[]> => {
+  const { data } = await axiosInstance.get(`/Movie/get-sorted?sortType=${sortType}&genre=${genre}`);
   return data;
 };
+
+export const getMovieFromTBDB = async (id: number): Promise<Film> => {
+  const { data } = await axiosInstance.get(`/Movie/get-by-tmdb-id?movieId=${id}`);
+  return data;
+}

@@ -32,7 +32,7 @@ const FilmSessionList: React.FC<ListFilmProps> = ({ films }) => {
               gap: {xs: 2,md:10},
             }}
           >
-            <Box >
+            <Box sx={{width:{xs: '100%',md:'300px'},}}>
               <FilmCard film={film} />
             </Box>
 

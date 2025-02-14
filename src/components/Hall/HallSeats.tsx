@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { getHall } from '@/api/hallAPI';
-import { getTicketsBySessionId } from '@/api/ticketAPI';
+import { getMyTickets, getTicketsBySessionId } from '@/api/ticketAPI';
 import { Hall } from '@/models/Hall';
 import { Session } from '@/models/Session';
 import { Box, Button, Checkbox, Paper, Tooltip, Typography } from '@mui/material';
@@ -9,6 +9,8 @@ import { Box, Button, Checkbox, Paper, Tooltip, Typography } from '@mui/material
 import axiosInstance from '@/utils/axios';
 
 import Loader from '../Loader';
+import { routes } from '@/routes';
+import { useNavigate } from 'react-router-dom';
 
 interface SeatSelection {
   seat: number;
@@ -17,10 +19,13 @@ interface SeatSelection {
 }
 
 const HallSeats = ({ session }: { session: Session }) => {
+  const navigate = useNavigate();
+
   const [selectedSeats, setSelectedSeats] = useState<SeatSelection[]>([]);
   const [hall, setHall] = useState<Hall>();
   const [isLoading, setIsLoading] = useState(false);
   const [bookedSeats, setBookedSeats] = useState<number[]>([]);
+  const [myTickets,setMyTickets] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchHall = async () => {
@@ -29,9 +34,12 @@ const HallSeats = ({ session }: { session: Session }) => {
         const hall = await getHall(+session.hallId);
         const tickets = await getTicketsBySessionId(+session.id);
         const booked = tickets.map((t) => t.seat);
-        setBookedSeats(booked);
+        const userTickets = await getMyTickets();
+        const userSeats = userTickets.filter(t => t.sessionId === session.id).map(t => t.seat); 
 
+        setBookedSeats(booked);
         setHall(hall);
+        setMyTickets(userSeats);
       } catch (err) {
         setIsLoading(false);
       } finally {
@@ -52,6 +60,10 @@ const HallSeats = ({ session }: { session: Session }) => {
     });
   };
 
+  const isMySeat = (seat: number) => {
+    return myTickets.includes(seat);
+  }
+
   const isChecked = (seat: number) => {
     return selectedSeats.some((s) => s.seat === seat) || isDisabled(seat);
   };
@@ -70,6 +82,8 @@ const HallSeats = ({ session }: { session: Session }) => {
       };
       await axiosInstance.post(`/Ticket/create`, { ...ticket });
     });
+
+    navigate(routes.PUBLIC.PROFILE);
   };
 
   if (isLoading || !hall) {
@@ -134,7 +148,7 @@ const HallSeats = ({ session }: { session: Session }) => {
                       sx={{
                         width: 48,
                         height: 48,
-                        '& .MuiSvgIcon-root': { fontSize: 28 },
+                        '& .MuiSvgIcon-root': { fontSize: 28,color: isMySeat(seatNumber) ? 'green' : 'inherit', },
                       }}
                     />
                   </Tooltip>

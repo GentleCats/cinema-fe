@@ -4,4 +4,5 @@ export interface Ticket {
   row: number;
   col: number;
   seat: number;
+  sessionId: number;
 }

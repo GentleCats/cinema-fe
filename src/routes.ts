@@ -36,6 +36,7 @@ interface SidebarLink {
   icon: React.ElementType<SvgIconProps>;
   route: string;
   label: string;
+  isAdmin: boolean;
 }
 
 export const sidebarLinks: SidebarLink[] = [
@@ -43,20 +44,24 @@ export const sidebarLinks: SidebarLink[] = [
     icon: HomeIcon,
     label: 'Home',
     route: routes.PUBLIC.HOME,
+    isAdmin: false
   },
   {
     icon: SettingsIcon,
     label: 'settings',
     route: routes.PRIVATE.HOME,
+    isAdmin: true
   },
   {
     icon: PermIdentityIcon,
     label: 'profile',
     route: routes.PUBLIC.PROFILE,
+    isAdmin: false
   },
   {
     icon: Theaters,
     label: 'Halls',
     route: routes.PRIVATE.HALLS,
+    isAdmin: true
   },
 ];
