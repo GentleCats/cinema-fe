@@ -4,15 +4,20 @@ import { sidebarLinks } from '@/routes';
 import { Box, IconButton, Stack } from '@mui/material';
 
 import { styles } from './styles.mui';
+import { useAuth } from '@/hooks/AuthContext';
 
 const { bottomNav: s } = styles;
 
-export const bottomNav = (
-  <Box sx={s.wrapper}>
+const BottomNav = () => {
+  const {user} = useAuth();
+  const isAdmin = user?.roles?.includes('Admin');
+
+  return (
+    <Box sx={s.wrapper}>
     <Box sx={s.inner}>
       <Stack sx={s.stack}>
         {sidebarLinks.map((link, idx) => (
-          <Link key={idx} to={link.route} style={s.link}>
+          (isAdmin || !link.isAdmin) && <Link key={idx} to={link.route} style={s.link}>
             <IconButton sx={s.icon}>
               <link.icon />
             </IconButton>
@@ -21,4 +26,7 @@ export const bottomNav = (
       </Stack>
     </Box>
   </Box>
-);
+  );
+}
+
+export default BottomNav;

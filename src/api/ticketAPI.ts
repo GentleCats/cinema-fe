@@ -6,3 +6,8 @@ export const getTicketsBySessionId = async (id: number): Promise<Ticket[]> => {
   const { data } = await axiosInstance.get(`/Ticket/get-by-sessionId/${id}`);
   return data;
 };
+
+export const getMyTickets = async (): Promise<Ticket[]> => {
+  const { data } = await axiosInstance.get('/Ticket/my-tickets');
+  return data;
+}

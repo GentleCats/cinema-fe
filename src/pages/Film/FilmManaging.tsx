@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { deleteMovie } from '@/api/movieAPI';
+import { deleteMovie, geMovie, getMovieFromTBDB } from '@/api/movieAPI';
 import { Film } from '@/models/Film';
 import { routes } from '@/routes';
 import { Box, Button, Container, Typography } from '@mui/material';
@@ -11,24 +11,23 @@ import FilmInfo from '@/components/Film/FilmInfo';
 import Loader from '@/components/Loader';
 import SessionList from '@/components/Session/SessionList';
 
-import axiosInstance from '@/utils/axios';
-
 const FilmManaging = () => {
   const { id } = useParams<{ id: string }>();
   const [film, setFilm] = useState<Film | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  if(!id) return;
 
   useEffect(() => {
     const fetchFilmDetails = async () => {
+      if(!id) return;
       try {
-        const response = await axiosInstance.get(`/Movie/get-by-tmdb-id?movieId=${id}`);
-
-        if (response.data) {
-          setFilm(response.data);
-        } else {
-          console.error('Invalid data structure received from API');
+        let movie = await geMovie(+id);
+        if(!movie){
+          movie = await getMovieFromTBDB(+id);
         }
+       
+        setFilm(movie);
       } catch (error) {
         console.error('Error fetching film details:', error);
       } finally {
@@ -60,7 +59,7 @@ const FilmManaging = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <FilmCreateForm film={film} setFilm={setFilm} />
+      <FilmCreateForm film={film} setFilm={setFilm} id={id}/>
 
       <Typography variant="h4" gutterBottom sx={{ py: 4 }}>
         Preview
