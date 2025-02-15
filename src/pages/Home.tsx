@@ -32,12 +32,8 @@ const Home: React.FC = () => {
     const fetchGenres = async () => {
       try {
         const data = await getGenres();
-
-        const formattedGenres = (Array.isArray(data) && data.every(item => 'id' in item && 'name' in item)) 
-          ? [{ label: "All", value: " " }, ...data.map((g: Genre) => ({ label: g.name, value: g.name }))]
-          : [{ label: "All", value: " " }];
-
-        setGenres(formattedGenres);
+        const formatedGenres = [{ label: "All", value: " " }, ...data.map((g: Genre) => ({ label: g.name, value: g.name }))] 
+        setGenres(formatedGenres);
       } catch (error) {
         console.error("Error fetching genres:", error);
       }
