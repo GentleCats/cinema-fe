@@ -5,7 +5,7 @@ import { Button, Typography, CircularProgress, List, ListItem, ListItemText } fr
 import { routes } from '@/routes';
 import { useAuth } from '@/hooks/AuthContext';
 import { User } from '@/models/User';
-import { Ticket } from '@/models/Ticket';
+import { Session } from '@/models/Session';
 
 import axiosInstance from '@/utils/axios';
 
@@ -14,9 +14,9 @@ const Profile = () => {
   const { logout } = useAuth();
 
   const [user, setUser] = useState<User | null>(null);
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [loading, setLoading] = useState({ user: false, tickets: false });
-  const [error, setError] = useState({ user: false, tickets: false });
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState({ user: false, sessions: false });
+  const [error, setError] = useState({ user: false, sessions: false });
 
   const fetchUser = async () => {
     setLoading((prev) => ({ ...prev, user: true }));
@@ -25,7 +25,6 @@ const Profile = () => {
     try {
       const res = await axiosInstance.get('/Account/get-me');
       console.log(res.data.user);
-      
       setUser(res.data.user);
     } catch (err) {
       console.error('Failed to fetch user', err);
@@ -35,24 +34,24 @@ const Profile = () => {
     }
   };
 
-  const fetchTickets = async () => {
-    setLoading((prev) => ({ ...prev, tickets: true }));
-    setError((prev) => ({ ...prev, tickets: false }));
+  const fetchSessions = async () => {
+    setLoading((prev) => ({ ...prev, sessions: true }));
+    setError((prev) => ({ ...prev, sessions: false }));
 
     try {
-      const res = await axiosInstance.get<Ticket[]>('/Ticket/my-tickets');
-      setTickets(res.data);
+      const res = await axiosInstance.get<Session[]>('/Ticket/my-sessions');
+      setSessions(res.data);
     } catch (err) {
-      console.error('Failed to fetch tickets', err);
-      setError((prev) => ({ ...prev, tickets: true }));
+      console.error('Failed to fetch sessions', err);
+      setError((prev) => ({ ...prev, sessions: true }));
     } finally {
-      setLoading((prev) => ({ ...prev, tickets: false }));
+      setLoading((prev) => ({ ...prev, sessions: false }));
     }
   };
 
   useEffect(() => {
     fetchUser();
-    fetchTickets();
+    fetchSessions();
   }, []);
 
   const handleLogOut = () => {
@@ -82,25 +81,25 @@ const Profile = () => {
         </>
       ) : null}
 
-      {/* Tickets Section */}
-      <Typography variant="h6" style={{ marginTop: '30px' }}>My Tickets</Typography>
-      {loading.tickets ? (
+      {/* Sessions Section */}
+      <Typography variant="h6" style={{ marginTop: '30px' }}>My Sessions</Typography>
+      {loading.sessions ? (
         <CircularProgress />
-      ) : error.tickets ? (
-        <Typography variant="body1" color="error">Failed to load tickets</Typography>
-      ) : tickets.length > 0 ? (
+      ) : error.sessions ? (
+        <Typography variant="body1" color="error">Failed to load sessions</Typography>
+      ) : sessions.length > 0 ? (
         <List>
-          {tickets.map((ticket) => (
-            <ListItem key={ticket.id} divider>
+          {sessions.map((session) => (
+            <ListItem key={session.id} divider>
               <ListItemText
-                primary={`Row: ${ticket.row}, Seat: ${ticket.seat}`}
-                // secondary={`Column: ${ticket.col} | Price: $${ticket.price}`}
+                primary={`${session.film.title} - ${session.date.toLocaleDateString()} ${session.startTime} - ${session.endTime}`}
+                secondary={`Hall: ${session.hall.name} | Price: $${session.price}`}
               />
             </ListItem>
           ))}
         </List>
       ) : (
-        <Typography variant="body1">No tickets purchased</Typography>
+        <Typography variant="body1">No sessions available</Typography>
       )}
     </div>
   );
