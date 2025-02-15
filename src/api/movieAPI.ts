@@ -1,4 +1,5 @@
 import { Film, FilmWithSessions } from '@/models/Film';
+import { Genre } from '@/models/Genres';
 import { z } from 'zod';
 
 import axiosInstance from '@/utils/axios';
@@ -30,3 +31,13 @@ export const getMovieFromTBDB = async (id: number): Promise<Film> => {
   const { data } = await axiosInstance.get(`/Movie/get-by-tmdb-id?movieId=${id}`);
   return data;
 }
+
+export const getGenres = async (): Promise<Genre[]> => {
+  try {
+    const { data } = await axiosInstance.get('/Movie/getGenres');
+    return data;
+  } catch (error) {
+    console.error('Error fetching genres:', error);
+    return []; 
+  }
+};
