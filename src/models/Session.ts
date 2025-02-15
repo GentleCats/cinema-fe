@@ -9,4 +9,5 @@ export interface Session {
   hall: Hall;
   film: Film;
   hallId: number;
+  price: number;
 }
