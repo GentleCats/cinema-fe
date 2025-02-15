@@ -51,7 +51,7 @@ const AdminHome: React.FC = () => {
           <PaginationComponent count={totalPages} page={currentPage} onPageChange={handlePageChange} />
         </>
       ) : (
-        <NotFound imageSrc="" />
+        <NotFound />
       )}
     </Container>
   );

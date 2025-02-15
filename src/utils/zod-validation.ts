@@ -31,7 +31,11 @@ export const filmValidation = z.object({
   genre: z.string(),
   releaseDate: z.date(),
   director: z.string(),
-  cast: z.string(),
+  cast: z.array(z.object({
+    name: z.string(),
+    character: z.string(),
+    photoUrl: z.string(),
+  })),
   rating: z
     .number()
     .positive()

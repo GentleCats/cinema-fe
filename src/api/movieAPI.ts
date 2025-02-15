@@ -5,7 +5,7 @@ import axiosInstance from '@/utils/axios';
 import { filmValidation } from '@/utils/zod-validation';
 
 export const createMovie = async (film: z.infer<typeof filmValidation>, id: number): Promise<void> => {
-  await axiosInstance.post('/Admin/create-movie', { ...film, tmdbId: id });
+  await axiosInstance.post('/Admin/create-movie', { ...film, tmdbId: id,cast:film.cast });
 };
 
 export const deleteMovie = async (id: number): Promise<void> => {
