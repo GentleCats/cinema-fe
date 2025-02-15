@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getSorted } from '@/api/movieAPI';
+import { getSorted, getGenres } from '@/api/movieAPI';
 import { FilmWithSessions } from '@/models/Film';
+import { Genre } from '@/models/Genres';
 import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import FilmSessionList from '@/components/Film/FilmSessionList';
 import Loader from '@/components/Loader';
@@ -15,6 +16,8 @@ const Home: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [filmsPerPage] = useState<number>(20);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [genres, setGenres] = useState<{ label: string; value: string }[]>([]);
+
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -25,11 +28,24 @@ const Home: React.FC = () => {
     fetchFilms();
   }, [sortType, genre]);
 
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const data = await getGenres();
+        const formatedGenres = [{ label: "All", value: " " }, ...data.map((g: Genre) => ({ label: g.name, value: g.name }))] 
+        setGenres(formatedGenres);
+      } catch (error) {
+        console.error("Error fetching genres:", error);
+      }
+    };
+
+    fetchGenres();
+  }, []);
+
   const indexOfLastFilm = page * filmsPerPage;
   const indexOfFirstFilm = indexOfLastFilm - filmsPerPage;
   const currentFilms = films.slice(indexOfFirstFilm, indexOfLastFilm);
-  const sortValues = [{ label: 'Date', value: 'date' }, { label: 'Title', value: 'title' }, { label: 'Genre', value: 'genre' }, { label: 'Sessions', value: 'sessions' }, { label: 'Duration', value: 'duration' }]
-  const genreValues = [{ label: 'All', value: ' ' }, { label: 'Action', value: 'action' }, { label: 'Horror', value: 'horror' }];
+  const sortValues = [{ label: 'Date', value: 'date' }, { label: 'Title', value: 'title' }, { label: 'Genre', value: 'genre' }, { label: 'Sessions', value: 'sessions' }, { label: 'Duration', value: 'duration' }];
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
@@ -42,9 +58,9 @@ const Home: React.FC = () => {
   };
 
   const handleGenreChange = (event: SelectChangeEvent<string>) => {
-    setGenre(event.target.value as string);
+    setGenre(event.target.value);
     setPage(1);
-  }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
@@ -67,11 +83,12 @@ const Home: React.FC = () => {
           <FormControl fullWidth sx={{ marginBottom: 4, gap: 2 }}>
             <InputLabel id="genre-select-label">Genre</InputLabel>
             <Select labelId="genre-select-label" value={genre} onChange={handleGenreChange} label="Genre">
-              {genreValues.map(item => {
-                return <MenuItem value={item.value} key={item.value}>{item.label}</MenuItem>
-              })}
+              {genres.map(item => (
+                <MenuItem value={item.value} key={item.value}>{item.label}</MenuItem>
+              ))}
             </Select>
           </FormControl>
+
           <FilmSessionList films={currentFilms} />
           <PaginationComponent count={totalPages} page={page} onPageChange={handlePageChange} />
         </>
