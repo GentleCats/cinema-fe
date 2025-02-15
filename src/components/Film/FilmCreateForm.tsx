@@ -36,8 +36,8 @@ const FilmCreateForm = ({ film, setFilm, id }: IFilmCreateForm) => {
       genre: film.genre,
       releaseDate: dayjs(film.releaseDate).toDate(),
       director: film.director,
-      cast: film.cast,
       rating: film.rating,
+      cast: film.cast,
       trailerUrl: film.trailerUrl,
       imageUrl: film.imageUrl,
     },
@@ -92,7 +92,7 @@ const FilmCreateForm = ({ film, setFilm, id }: IFilmCreateForm) => {
 
   const handleChange = async () => {
     const filmFormData = getValues();
-    const filmData = { ...filmFormData, id: film.id };
+    const filmData = { ...filmFormData, id: film.id, cast: filmFormData.cast };
     setFilm(filmData);
   };
 
@@ -152,9 +152,6 @@ const FilmCreateForm = ({ film, setFilm, id }: IFilmCreateForm) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           {renderTextField('director', 'Director')}
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          {renderTextField('cast', 'Cast')}
         </Grid>
         <Grid item xs={12} sm={6}>
           <Controller

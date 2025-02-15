@@ -1,5 +1,5 @@
 import { Film } from '@/models/Film';
-import { Box, Card, CardContent, CardMedia, Grid, Rating, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Grid, Rating, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 
 const FilmInfo = ({ film }: { film: Film }) => {
   const formatDate = (date: Date | string) => {
@@ -10,6 +10,7 @@ const FilmInfo = ({ film }: { film: Film }) => {
   return (
     <Box sx={{ border: '2px solid yellow', borderRadius: 2, p: 2 }}>
       <Grid container spacing={4}>
+        {/* Top Section: Poster and Basic Info */}
         <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <CardMedia
             component="img"
@@ -26,9 +27,11 @@ const FilmInfo = ({ film }: { film: Film }) => {
             }}
           />
         </Grid>
+
         <Grid item xs={12} md={8}>
           <Card sx={{ height: '100%' }}>
             <CardContent>
+              {/* Basic Info */}
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#fff' }}>
                 {film.title}
               </Typography>
@@ -69,45 +72,85 @@ const FilmInfo = ({ film }: { film: Film }) => {
                   {film.director}
                 </Typography>
               )}
-
-              {film.cast && film.cast.length > 0 ? (
-                <Typography>
-                  <strong>Cast: </strong>
-                  {film.cast} and others...
-                </Typography>
-              ) : (
-                <Typography>No cast available</Typography>
-              )}
-
-              {film.trailerUrl && (
-                <Box sx={{ mt: 2 }}>
-                  <Box
-                    sx={{
-                      display: 'inline-block',
-                      backgroundColor: 'yellow',
-                      padding: '4px 12px',
-                      borderRadius: '6px 6px 0 0',
-                      marginBottom: 0,
-                    }}
-                  >
-                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black' }}>
-                      Trailer:
-                    </Typography>
-                  </Box>
-                  <iframe
-                    width="100%"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${film.trailerUrl.split('v=')[1]}?rel=0`}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </Box>
-              )}
             </CardContent>
           </Card>
         </Grid>
+      </Grid>
+
+      {/* Bottom Section: Cast and Trailer */}
+      <Grid container spacing={4} sx={{ mt: 2 }}>
+        {/* Cast */}
+        {film.cast && film.cast.length > 0 ? (
+          <Grid item xs={12}>
+            <Typography variant="h6" sx={{ marginTop: 2 }}>
+              <strong>Cast:</strong>
+            </Typography>
+            <Grid container spacing={2}>
+              {film.cast.map((actor) => (
+                <Grid item xs={12} sm={6} md={4} key={actor.name}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <Avatar
+                      src={actor.photoUrl}
+                      alt={actor.name}
+                      sx={{
+                        width: 120,
+                        height: 120,
+                        mb: 1,
+                        objectFit: 'cover',
+                      }}
+                    />
+                    <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                      {actor.name}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
+                      {actor.character}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        ) : (
+          <Typography>No cast available</Typography>
+        )}
+
+        {/* Trailer */}
+        {film.trailerUrl && (
+          <Grid item xs={12}>
+            <Box sx={{ mt: 2 }}>
+              <Box
+                sx={{
+                  display: 'inline-block',
+                  backgroundColor: 'yellow',
+                  padding: '4px 12px',
+                  borderRadius: '6px 6px 0 0',
+                  marginBottom: 0,
+                }}
+              >
+                <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'black' }}>
+                  Trailer:
+                </Typography>
+              </Box>
+              <iframe
+                width="100%"
+                height="315"
+                src={`https://www.youtube.com/embed/${film.trailerUrl.split('v=')[1]}?rel=0`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </Box>
   );

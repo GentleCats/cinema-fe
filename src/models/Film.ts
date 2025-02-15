@@ -1,3 +1,4 @@
+import { Actor } from './Actor';
 import { Session } from './Session';
 
 export interface Film {
@@ -11,7 +12,7 @@ export interface Film {
   releaseDate?: Date;
   endDate?: Date;
   director?: string;
-  cast?: string;
+  cast: Actor[];
   rating: number;
   trailerUrl?: string;
   imageUrl?: string;
