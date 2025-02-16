@@ -11,3 +11,8 @@ export const getMyTickets = async (): Promise<Ticket[]> => {
   const { data } = await axiosInstance.get('/Ticket/my-tickets');
   return data;
 }
+
+export const getMySessions = async () => {
+  const { data } = await axiosInstance.get('/Ticket/my-sessions');
+  return data;
+}

@@ -1,5 +1,6 @@
 import { Film } from './Film';
 import { Hall } from './Hall';
+import { Ticket } from './Ticket';
 
 export interface Session {
   id: number;
@@ -10,4 +11,6 @@ export interface Session {
   film: Film;
   hallId: number;
   price: number;
+  tickets: Ticket[];
+  movie: Film;
 }
