@@ -41,3 +41,9 @@ export const getGenres = async (): Promise<Genre[]> => {
     return []; 
   }
 };
+
+export const getRecommendedFilms = async (): Promise<Film[]> => {
+  const { data } = await axiosInstance.get('/Movie/get-recommended-films');
+  return data;
+};
+

@@ -6,6 +6,7 @@ import TicketBooking from '@/pages/TicketBooking.tsx';
 
 import AdminHome from './pages/AdminHome';
 import FilmDetails from './pages/Film/FilmDetails';
+import RecommendedFilms from './pages/Film/RecommendedFilms';
 import FilmManaging from './pages/Film/FilmManaging';
 import HallCreateForm from './pages/Hall/HallCreateForm';
 import Halls from './pages/Hall/Halls';
@@ -48,6 +49,7 @@ function App() {
           <Route path={routes.PRIVATE.HOME} element={<AdminHome />} />
           <Route path={`${routes.PRIVATE.FILMS}/:id`} element={<FilmManaging />} />
           <Route path={routes.PRIVATE.HALLS} element={<Halls />} />
+          <Route path={routes.PUBLIC.RECOMMENDED_FILMS} element={<RecommendedFilms />} />
           <Route path={routes.PRIVATE.HALLS_CREATE} element={<HallCreateForm />} />
           <Route path={`${routes.PRIVATE.SESSIONS_CREATE}/:id`} element={<SessionCreateForm />} />
         </Route>

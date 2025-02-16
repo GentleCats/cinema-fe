@@ -16,6 +16,7 @@ export const routes = {
     LOGIN: '/login',
     REGISTER: '/register',
     TICKET_BOOKING: '/ticket-booking',
+    RECOMMENDED_FILMS: '/recommended-films',
   },
   PRIVATE: {
     HOME: '/admin',
@@ -63,5 +64,11 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'Halls',
     route: routes.PRIVATE.HALLS,
     isAdmin: true
+  },
+  {
+    icon: LocalActivityIcon,
+    label: 'Recommended Films',
+    route: routes.PUBLIC.RECOMMENDED_FILMS,
+    isAdmin: false 
   },
 ];
