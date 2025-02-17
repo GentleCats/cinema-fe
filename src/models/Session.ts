@@ -13,4 +13,5 @@ export interface Session {
   price: number;
   tickets: Ticket[];
   movie: Film;
+  movieId: number;
 }
