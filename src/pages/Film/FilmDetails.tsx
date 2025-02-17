@@ -21,7 +21,7 @@ const FilmDetails = () => {
       if (!id) return;
       try {
         const movie = await geMovie(+id);
-        
+
         if (movie) {
           setFilm(movie);
         } else {

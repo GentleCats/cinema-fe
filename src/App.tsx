@@ -6,8 +6,8 @@ import TicketBooking from '@/pages/TicketBooking.tsx';
 
 import AdminHome from './pages/AdminHome';
 import FilmDetails from './pages/Film/FilmDetails';
-import RecommendedFilms from './pages/Film/RecommendedFilms';
 import FilmManaging from './pages/Film/FilmManaging';
+import RecommendedFilms from './pages/Film/RecommendedFilms';
 import HallCreateForm from './pages/Hall/HallCreateForm';
 import Halls from './pages/Hall/Halls';
 import Home from './pages/Home';

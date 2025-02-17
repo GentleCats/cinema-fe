@@ -1,19 +1,12 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+
+import { Box, Button, Typography } from '@mui/material';
 
 const NoData: React.FC = () => {
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      textAlign="center"
-    >
+    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center">
       <img
-        src={
-          'https://cdn-icons-png.flaticon.com/512/2748/2748558.png' 
-        }
+        src={'https://cdn-icons-png.flaticon.com/512/2748/2748558.png'}
         alt="No Data"
         style={{
           marginBottom: 24,

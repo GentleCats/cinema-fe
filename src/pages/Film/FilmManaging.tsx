@@ -16,17 +16,17 @@ const FilmManaging = () => {
   const [film, setFilm] = useState<Film | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  if(!id) return;
+  if (!id) return;
 
   useEffect(() => {
     const fetchFilmDetails = async () => {
-      if(!id) return;
+      if (!id) return;
       try {
         let movie = await geMovie(+id);
-        if(!movie){
+        if (!movie) {
           movie = await getMovieFromTBDB(+id);
         }
-       
+
         setFilm(movie);
       } catch (error) {
         console.error('Error fetching film details:', error);
@@ -59,7 +59,7 @@ const FilmManaging = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <FilmCreateForm film={film} setFilm={setFilm} id={id}/>
+      <FilmCreateForm film={film} setFilm={setFilm} id={id} />
 
       <Typography variant="h4" gutterBottom sx={{ py: 4 }}>
         Preview

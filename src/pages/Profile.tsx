@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Typography, CircularProgress, Card, CardContent, List, ListItem, ListItemText } from '@mui/material';
-import { routes } from '@/routes';
-import { useAuth } from '@/hooks/AuthContext';
-import { User } from '@/models/User';
+
+import { getMySessions } from '@/api/ticketAPI';
 import { Session } from '@/models/Session';
+import { User } from '@/models/User';
+import { routes } from '@/routes';
+import { Button, Card, CardContent, CircularProgress, List, ListItem, ListItemText, Typography } from '@mui/material';
+
 import axiosInstance from '@/utils/axios';
-import { getMySessions } from "@/api/ticketAPI";
+
+import { useAuth } from '@/hooks/AuthContext';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -58,7 +61,9 @@ const Profile = () => {
       {loading.user ? (
         <CircularProgress />
       ) : error.user ? (
-        <Typography variant="body1" color="error">Failed to load user data</Typography>
+        <Typography variant="body1" color="error">
+          Failed to load user data
+        </Typography>
       ) : user ? (
         <>
           <Typography variant="h5">Welcome, {user.username}!</Typography>
@@ -69,26 +74,42 @@ const Profile = () => {
         </>
       ) : null}
 
-      <Typography variant="h5" style={{ marginTop: '30px' }}>Your Sessions</Typography>
+      <Typography variant="h5" style={{ marginTop: '30px' }}>
+        Your Sessions
+      </Typography>
       {loading.sessions ? (
         <CircularProgress />
       ) : error.sessions ? (
-        <Typography variant="body1" color="error">Failed to load sessions</Typography>
+        <Typography variant="body1" color="error">
+          Failed to load sessions
+        </Typography>
       ) : (
         sessions.map((session) => (
           <Card key={session.id} style={{ margin: '20px auto', maxWidth: 600 }}>
             <CardContent>
-              <img src={session.movie.imageUrl} alt={session.movie.title} style={{ width: '100%', borderRadius: '10px' }} />
+              <img
+                src={session.movie.imageUrl}
+                alt={session.movie.title}
+                style={{ width: '100%', borderRadius: '10px' }}
+              />
               <Typography variant="h6">{session.movie.title}</Typography>
-              <Typography variant="body1">Time: {session.startTime} - {session.endTime}</Typography>
+              <Typography variant="body1">
+                Time: {session.startTime} - {session.endTime}
+              </Typography>
               <Typography variant="body1">Price: ${session.price}</Typography>
-              <Typography variant="body1">Hall: {session.hall.name} (Capacity: {session.hall.capacity})</Typography>
-              <Typography variant="body2" style={{ marginTop: '10px' }}><strong>Tickets:</strong></Typography>
+              <Typography variant="body1">
+                Hall: {session.hall.name} (Capacity: {session.hall.capacity})
+              </Typography>
+              <Typography variant="body2" style={{ marginTop: '10px' }}>
+                <strong>Tickets:</strong>
+              </Typography>
               <List>
                 {session.tickets.map((ticket) => (
                   <ListItem key={ticket.id} divider>
-                    <ListItemText primary={`Seat: ${ticket.seat}, Row: ${ticket.row}, Col: ${ticket.col}`}
-                                  secondary={`Booked at: ${new Date(ticket.bookingTime).toLocaleString()}`} />
+                    <ListItemText
+                      primary={`Seat: ${ticket.seat}, Row: ${ticket.row}, Col: ${ticket.col}`}
+                      secondary={`Booked at: ${new Date(ticket.bookingTime).toLocaleString()}`}
+                    />
                   </ListItem>
                 ))}
               </List>
