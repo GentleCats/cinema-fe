@@ -15,9 +15,9 @@ const ListFilm: React.FC<ListFilmProps> = ({ films }) => {
       container
       spacing={3}
       sx={{
-        gap:4,
+        gap: 4,
         justifyContent: 'center',
-        alignItems: 'center', 
+        alignItems: 'center',
       }}
     >
       {films.map((film) => (

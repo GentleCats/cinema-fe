@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginUser } from '@/api/authAPI';
 import { routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Paper, TextField, Typography, IconButton, InputAdornment} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Box, Button, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { z } from 'zod';
 
 import Loader from '@/components/Loader';
@@ -109,7 +109,11 @@ const SignIn = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                    {showPassword ? <Visibility sx={{ color: 'white' }} /> : <VisibilityOff sx={{ color: 'white' }} />}
+                      {showPassword ? (
+                        <Visibility sx={{ color: 'white' }} />
+                      ) : (
+                        <VisibilityOff sx={{ color: 'white' }} />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -118,13 +122,7 @@ const SignIn = () => {
           )}
         />
       </Box>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        disabled={!isValid}
-        sx={{ mt: 3, width: '100%' }}
-      >
+      <Button type="submit" variant="contained" color="primary" disabled={!isValid} sx={{ mt: 3, width: '100%' }}>
         Sign In
       </Button>
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center', gap: 2 }}>

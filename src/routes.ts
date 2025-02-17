@@ -45,30 +45,30 @@ export const sidebarLinks: SidebarLink[] = [
     icon: HomeIcon,
     label: 'Home',
     route: routes.PUBLIC.HOME,
-    isAdmin: false
+    isAdmin: false,
   },
   {
     icon: SettingsIcon,
     label: 'settings',
     route: routes.PRIVATE.HOME,
-    isAdmin: true
+    isAdmin: true,
   },
   {
     icon: PermIdentityIcon,
     label: 'profile',
     route: routes.PUBLIC.PROFILE,
-    isAdmin: false
+    isAdmin: false,
   },
   {
     icon: Theaters,
     label: 'Halls',
     route: routes.PRIVATE.HALLS,
-    isAdmin: true
+    isAdmin: true,
   },
   {
     icon: LocalActivityIcon,
     label: 'Recommended Films',
     route: routes.PUBLIC.RECOMMENDED_FILMS,
-    isAdmin: false 
+    isAdmin: false,
   },
 ];

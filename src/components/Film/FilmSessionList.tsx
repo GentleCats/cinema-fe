@@ -23,16 +23,16 @@ const FilmSessionList: React.FC<ListFilmProps> = ({ films }) => {
           <Card
             sx={{
               display: 'flex',
-              flexDirection: {xs:'column',md:'row'},
+              flexDirection: { xs: 'column', md: 'row' },
               backgroundColor: 'transparent',
               boxShadow: 2,
               borderRadius: 2,
               color: 'text.primary',
-              height: {xs: 'auto',md:'auto'},
-              gap: {xs: 2,md:10},
+              height: { xs: 'auto', md: 'auto' },
+              gap: { xs: 2, md: 10 },
             }}
           >
-            <Box sx={{width:{xs: '100%',md:'300px'},}}>
+            <Box sx={{ width: { xs: '100%', md: '300px' } }}>
               <FilmCard film={film} />
             </Box>
 

@@ -3,11 +3,6 @@ import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '@/hooks/AuthContext';
 
-// type RoleProtectedRouteProps = {
-//   children: JSX.Element;
-//   allowedRoles: string[];
-// };
-
 const RoleProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
 

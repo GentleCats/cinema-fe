@@ -1,9 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, CircularProgress, Alert } from '@mui/material';
-import ListFilm from '@/components/Film/FilmList';
+
+import { getRecommendedFilms } from '@/api/movieAPI';
 import { Film } from '@/models/Film';
-import { getRecommendedFilms } from '@/api/movieAPI'; 
+import { Alert, CircularProgress, Container, Typography } from '@mui/material';
+
+import ListFilm from '@/components/Film/FilmList';
 
 const RecommendedFilms: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);
@@ -28,7 +29,7 @@ const RecommendedFilms: React.FC = () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
-        🎬 Рекомендовані фільми
+        🎬 Film Recommendation
       </Typography>
 
       {loading && <CircularProgress />}

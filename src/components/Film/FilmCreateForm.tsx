@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { createMovie, geMovie, updateMovie } from '@/api/movieAPI';
 import { Film } from '@/models/Film';
+import { routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -12,7 +13,6 @@ import dayjs from 'dayjs';
 import { z } from 'zod';
 
 import { filmValidation } from '@/utils/zod-validation';
-import { routes } from '@/routes';
 
 interface IFilmCreateForm {
   film: Film;
@@ -80,7 +80,7 @@ const FilmCreateForm = ({ film, setFilm, id }: IFilmCreateForm) => {
       setIsLoading(true);
       if (isInProduction) {
         await updateMovie(+id, data);
-        navigate(routes.PUBLIC.HOME)
+        navigate(routes.PUBLIC.HOME);
         return;
       }
       await createMovie(data, film.id);

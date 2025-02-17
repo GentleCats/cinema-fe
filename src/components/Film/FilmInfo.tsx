@@ -1,5 +1,18 @@
 import { Film } from '@/models/Film';
-import { Box, Card, CardContent, CardMedia, Grid, Rating, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Rating,
+  Typography,
+} from '@mui/material';
 
 const FilmInfo = ({ film }: { film: Film }) => {
   const formatDate = (date: Date | string) => {

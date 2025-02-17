@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
 import { Film } from '@/models/Film';
 import { Container, Typography } from '@mui/material';
 
 import ListFilm from '@/components/Film/FilmList';
-import PaginationComponent from '@/components/Pagination';
-import NotFound from '@/components/NotFound';
 import Loader from '@/components/Loader';
+import NotFound from '@/components/NotFound';
+import PaginationComponent from '@/components/Pagination';
 
 import axiosInstance from '@/utils/axios';
 
@@ -19,13 +20,13 @@ const AdminHome: React.FC = () => {
   const currentPage = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
-    setIsLoading(true); 
+    setIsLoading(true);
     axiosInstance
       .get(`/Movie/get-popular?page=${currentPage}`)
       .then((res) => {
         setFilms(res.data);
-        setTotalPages(100); 
-        setIsLoading(false); 
+        setTotalPages(100);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error('Failed to fetch films', err);
@@ -44,7 +45,7 @@ const AdminHome: React.FC = () => {
       </Typography>
 
       {isLoading ? (
-        <Loader /> 
+        <Loader />
       ) : films.length > 0 ? (
         <>
           <ListFilm films={films} />

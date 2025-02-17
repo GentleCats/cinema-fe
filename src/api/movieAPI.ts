@@ -6,7 +6,7 @@ import axiosInstance from '@/utils/axios';
 import { filmValidation } from '@/utils/zod-validation';
 
 export const createMovie = async (film: z.infer<typeof filmValidation>, id: number): Promise<void> => {
-  await axiosInstance.post('/Admin/create-movie', { ...film, tmdbId: id,cast:film.cast });
+  await axiosInstance.post('/Admin/create-movie', { ...film, tmdbId: id, cast: film.cast });
 };
 
 export const deleteMovie = async (id: number): Promise<void> => {
@@ -22,7 +22,7 @@ export const geMovie = async (id: number): Promise<Film> => {
   return movie;
 };
 
-export const getSorted = async (sortType: string, genre:string): Promise<FilmWithSessions[]> => {
+export const getSorted = async (sortType: string, genre: string): Promise<FilmWithSessions[]> => {
   const { data } = await axiosInstance.get(`/Movie/get-sorted?sortType=${sortType}&genre=${genre}`);
   return data;
 };
@@ -30,7 +30,7 @@ export const getSorted = async (sortType: string, genre:string): Promise<FilmWit
 export const getMovieFromTBDB = async (id: number): Promise<Film> => {
   const { data } = await axiosInstance.get(`/Movie/get-by-tmdb-id?movieId=${id}`);
   return data;
-}
+};
 
 export const getGenres = async (): Promise<Genre[]> => {
   try {
@@ -38,7 +38,7 @@ export const getGenres = async (): Promise<Genre[]> => {
     return data;
   } catch (error) {
     console.error('Error fetching genres:', error);
-    return []; 
+    return [];
   }
 };
 
@@ -46,4 +46,3 @@ export const getRecommendedFilms = async (): Promise<Film[]> => {
   const { data } = await axiosInstance.get('/Movie/get-recommended-films');
   return data;
 };
-

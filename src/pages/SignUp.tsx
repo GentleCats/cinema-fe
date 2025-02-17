@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { registerUser } from '@/api/authAPI';
 import { routes } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Box, Button, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { z } from 'zod';
+
 import Loader from '@/components/Loader';
+
 import { registerValidation } from '@/utils/zod-validation';
 
 const SignUp = () => {
@@ -70,14 +73,28 @@ const SignUp = () => {
           name="username"
           control={control}
           render={({ field }) => (
-            <TextField {...field} label="Username" variant="outlined" error={!!errors.username} helperText={errors.username?.message} fullWidth />
+            <TextField
+              {...field}
+              label="Username"
+              variant="outlined"
+              error={!!errors.username}
+              helperText={errors.username?.message}
+              fullWidth
+            />
           )}
         />
         <Controller
           name="email"
           control={control}
           render={({ field }) => (
-            <TextField {...field} label="Email" variant="outlined" error={!!errors.email} helperText={errors.email?.message} fullWidth />
+            <TextField
+              {...field}
+              label="Email"
+              variant="outlined"
+              error={!!errors.email}
+              helperText={errors.email?.message}
+              fullWidth
+            />
           )}
         />
         <Controller
@@ -96,7 +113,11 @@ const SignUp = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={() => setShowPassword((prev) => !prev)}>
-                      {showPassword ? <Visibility sx={{ color: 'white' }} /> : <VisibilityOff sx={{ color: 'white' }} />}
+                      {showPassword ? (
+                        <Visibility sx={{ color: 'white' }} />
+                      ) : (
+                        <VisibilityOff sx={{ color: 'white' }} />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -129,13 +150,7 @@ const SignUp = () => {
           )}
         />
       </Box>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        disabled={!isValid}
-        sx={{ mt: 3, width: '100%' }}
-      >
+      <Button type="submit" variant="contained" color="primary" disabled={!isValid} sx={{ mt: 3, width: '100%' }}>
         Sign Up
       </Button>
       <Box sx={{ display: 'flex', alignItems: 'center', mt: 2, justifyContent: 'center', gap: 2 }}>
