@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useContext, useLayoutEffect, useState } from 'react';
-
 import { decodeRole } from '@/utils/decodeToken';
 
 type UserMetaData = {
@@ -11,19 +10,22 @@ type AuthContextType = {
   user: UserMetaData;
   setUser: (user: UserMetaData) => void;
   logout: () => void;
+  loading: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserMetaData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const roles = decodeRole(token);
-      setUser({ token, roles: roles });
+      setUser({ token, roles });
     }
+    setLoading(false);
   }, []);
 
   const logout = () => {
@@ -31,7 +33,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
-  return <AuthContext.Provider value={{ user, setUser, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, setUser, logout, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

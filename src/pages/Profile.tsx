@@ -10,6 +10,7 @@ import { Button, Card, CardContent, CircularProgress, List, ListItem, ListItemTe
 import axiosInstance from '@/utils/axios';
 
 import { useAuth } from '@/hooks/AuthContext';
+import { getByMovieId } from '@/api/movieAPI';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -38,7 +39,16 @@ const Profile = () => {
     setError((prev) => ({ ...prev, sessions: false }));
     try {
       const data = await getMySessions();
-      setSessions(data);
+
+      const sessionsWithMovies = await Promise.all(
+        data.map(async (session: Session) => {
+          const movie = await getByMovieId(session.movieId);
+          return { ...session, movie };
+        })
+      );
+  
+      setSessions(sessionsWithMovies);
+      
     } catch (err) {
       setError((prev) => ({ ...prev, sessions: true }));
     } finally {
@@ -85,6 +95,7 @@ const Profile = () => {
         </Typography>
       ) : (
         sessions.map((session) => (
+
           <Card key={session.id} style={{ margin: '20px auto', maxWidth: 600 }}>
             <CardContent>
               <img

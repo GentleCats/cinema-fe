@@ -22,6 +22,11 @@ export const geMovie = async (id: number): Promise<Film> => {
   return movie;
 };
 
+export const getByMovieId = async (id: number): Promise<Film> => {
+  const { data } = await axiosInstance.get(`/Movie/get-by-movie-id/${id}`);
+  return data;
+}
+
 export const getSorted = async (sortType: string, genre: string): Promise<FilmWithSessions[]> => {
   const { data } = await axiosInstance.get(`/Movie/get-sorted?sortType=${sortType}&genre=${genre}`);
   return data;
